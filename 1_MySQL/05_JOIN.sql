@@ -230,6 +230,14 @@ FROM employee
 	JOIN job USING (job_code)
     JOIN location ON (location_id = local_code)
     WHERE job_name = '대리' AND local_name LIKE 'ASIA%';
+
+SELECT emp_id, emp_name, job_name, dept_title, local_name, salary
+FROM employee
+	JOIN job USING(job_code)
+    JOIN department ON (dept_code = dept_id)
+    JOIN location ON (location_id = local_code)
+    WHERE job_name = '대리' AND local_name LIKE 'ASIA%';
+
     
 SELECT * FROM employee; -- dept_code
 SELECT * FROM department; -- dept_id
@@ -245,12 +253,33 @@ JOIN department ON (dept_code = dept_id)
 JOIN job USING (job_code)
 WHERE substr(emp_no, 8, 1)= 2 AND substr(emp_no, 1, 1)=7 AND substr(emp_name, 1, 1) = '전';
 
+SELECT * FROM employee; -- emp_name, emp_no, dept_code, job_code
+SELECT * FROM job; -- job_code, job_name
+SELECT * FROM department; -- dept_id, dept_title
+
+SELECT emp_name, emp_no, dept_title, job_name
+FROM employee
+	JOIN job USING(job_code)
+    JOIN department ON (dept_code = dept_id)
+    -- WHERE emp_no LIKE '7%'
+    WHERE emp_no LIKE '7_____-2%' AND emp_name LIKE '전%';
 
 -- 3. 보너스를 받은 직원들의 직원명, 보너스, 연봉, 부서명, 근무지역 조회
+--    부서가 없는 직원들도 나태내고 싶다면 LEFT JOIN (employee 테이블인 왼쪽에 있을 떄)
 SELECT emp_name, bonus, salary*12, dept_title, local_name
 FROM employee
-JOIN department ON (dept_code = dept_id)
-JOIN location ON (location_id = local_code)
+	LEFT JOIN department ON (dept_code = dept_id)
+	LEFT JOIN location ON (location_id = local_code)
+WHERE bonus is not NULL;
+
+SELECT * FROM employee; -- emp_name, bonus, salary, dept_code
+SELECT * FROM department; -- dept_id, dept_title, location_id
+SELECT * FROM location; -- local_code, local_name
+
+SELECT emp_name, bonus, (salary + salary * bonus)*12, dept_title, local_name
+FROM employee
+	JOIN department ON (dept_code = dept_id)
+    JOIN location ON (location_id = local_code)
 WHERE bonus is not NULL;
 
 -- 4. 한국과 일본에서 근무하는 직원들의 직원명, 부서명, 근무지역, 근무국가 조회
@@ -266,6 +295,19 @@ FROM employee
 	JOIN national USING(national_code)
     WHERE national_name IN ('한국' , '일본');
 
+SELECT * FROM employee; -- emp_name, dept_code
+SELECT * FROM department; -- dept_id, dept_title, location_id
+SELECT * FROM location; -- local_code, local_name, national_code
+SELECT * FROM national; -- national_code, national_name
+
+
+SELECT emp_name, dept_title, local_name, national_name
+FROM employee
+	JOIN department ON (dept_code = dept_id)
+    JOIN location ON (location_id = local_code)
+    JOIN national USING (national_code)
+    WHERE national_name IN ('한국', '일본');
+
 -- 5. 각 부서별 평균 급여를 조회하여 부서명, 평균 급여 조회
 
 SELECT 
@@ -273,6 +315,16 @@ SELECT
 FROM employee
 	JOIN department ON (dept_code = dept_id)
 GROUP BY dept_title;
+
+SELECT * FROM employee; -- dept_code, salary
+SELECT * FROM department; -- dept_id, dept_title
+
+
+SELECT dept_title, avg(salary)
+FROM employee
+	JOIN department ON (dept_code = dept_id)
+GROUP BY dept_title; 
+
 
 -- 6. 각 부서별 총 급여의 합이 1000만원 이상인 부서명, 급여 합 조회
 
@@ -283,6 +335,12 @@ JOIN department ON (dept_code = dept_id)
 GROUP BY dept_title
 HAVING 총급여 >= 10000000;
 
+SELECT dept_title, sum(salary)
+FROM employee
+	JOIN department ON (dept_code = dept_id)
+GROUP BY dept_title
+HAVING sum(salary) >= 10000000;
+
 
 -- 7. 사번, 직원명, 직급명, 급여 등급, 구분 조회
 --         이떄 구분에 행당하는 값은 아래 참고!
@@ -290,22 +348,87 @@ HAVING 총급여 >= 10000000;
 --         급여 등급이 S3, S4인 경우 '중급'
 --         급여 등급이 S5, S6인 경우 '초급'
 
+SELECT * FROM employee; -- emp_id, emp_name, job_code
+SELECT * FROM job; -- job_code, job_name
+SELECT * FROM sal_grade; -- sal_level, min_sal, max_sal
+
+SELECT 
+emp_id, emp_name, job_name, sal_level,
+if(sal_level IN ('S1', 'S2'), '고급', 
+	if(sal_level IN('S3', 'S4'), '중급', '초급')) 구분,
+    CASE WHEN sal_level IN ('S11', 'S2') THEN '고급'
+         WHEN sal_level IN ('S3', 'S4') THEN '중급'
+         ELSE '초급'
+         END 구분2
+FROM employee
+	JOIN job USING (job_code)
+	JOIN sal_grade ON (salary BETWEEN min_sal AND max_sal);
 
 SELECT emp_id, emp_name, sal_levelm
 
+-- 8. 보너스를 받지 않은 직원들 중 직급 코드가 J4 또는 J7인 직원들의 직원명, 직급명, 급여 조회
+SELECT * FROM employee; -- emp_name, job_code, salary, bonus
+SELECT * FROM job; -- job_code, job_name
 
+SELECT emp_name, job_name, salary
+FROM employee
+	JOIN job USING (job_code)
+WHERE bonus IS NULL AND job_code IN ('J4', 'J7');
 
-
-
--- 8. 보너스를 받지 않은 직원들 중 직급 코드가 J4 또는 J7인 직우너들의 직원명, 직급명, 급여 조회
+    
 
 -- 9. 부서가 있는 직원들의 직우너며으 직급명, 부서명, 근무지역 조회
+-- INNER JOIN을 하는 경우 null 이 포함되어 있는 것처럼 일치하는 걸 못찾는다면 제외
+
+SELECT * FROM employee; -- emp_name, job_code, dept_code
+SELECT * FROM job; -- job_code, job_name
+SELECT * FROM department; -- dept_id, dept_title, location_id
+SELECT * FROM location; -- local_code, local_name
+
+SELECT emp_name, job_name, dept_title, local_name
+FROM employee
+	JOIN job USING (job_code)
+    JOIN department ON (dept_code = dept_id)
+    JOIN location ON (location_id = local_code)
+WHERE dept_code IS NOT NULL;
 
 -- 10. 해외영업팀에 근무하는 직원들의 직원명, 직급명, 부서코드, 부서명 조회
+SELECT * FROM employee; -- emp_name, dept_code, job_code
+SELECT * FROM job; -- job_code, job_name
+SELECT * FROM department; -- dept_id, dept_title
+
+SELECT emp_name, job_name, dept_code, dept_title
+FROM employee
+	JOIN job USING (job_code)
+    JOIN department ON (dept_code = dept_id)
+WHERE dept_title LIKE '해외영업%';
 
 -- 11. 이름에 '형'자가 들어있는 직원들의 사번, 직원명, 직급명 조회
+SELECT * FROM employee; -- emp_id, emp_name, job_code
+SELECT * FROM job; -- job_code, job_name
+
+SELECT *
+FROM employee
+	JOIN job USING (job_code)
+WHERE emp_name LIKE '%형%';
 
 -- 12. 사번, 사원명, 부서명, 직급명, 지역명, 국가명, 급여등급 조회 참고로 employee, job, department, location, national, sal_grade
+
+SELECT * FROM employee; -- emp_id, emp_name, dept_code, job_code
+SELECT * FROM department; -- dept_id, dept_title, location_id
+SELECT * FROM job; -- job_code, job_name
+SELECT * FROM locatioon; -- local_code, local_name, national_code
+SELECT * FROM national; -- national_code, national_name
+SELECT * FROM sal_grade; -- sal_level, min_sal, max_sal
+
+SELECT emp_id, emp_name, job_name, local_name, national_name, sal_level
+FROM employee
+	JOIN department ON (dept_code = dept_id)
+    JOIN jon USING (jon_code)
+    JOIN location ON (location_id = local_code)
+    JOIN national USING (national_code)
+    JOIN sal_grade ON (salary BETWEEN min_sal AND max_sal);
+
 
 
 

@@ -13,10 +13,26 @@ FROM actor;
 
 -- 5. address 테이블에서 district가 비어있지 않고 앞에 숫자 제외 주소만 10개 조회
 
+SELECT substr(address, instr(address, '') + 1) 'address', district ''
+FROM address
+WHERE district != ''
+ORDER BY 2, 1 DESC;
+
+SELECT 
+	address,
+    trim(regexp_replace (address, '[0-9]+', ''))
+FROM address;
+
+
 -- 6. customer_list 테이블에서 id가 6인 사람부터 10명 조회
 
 -- 7. actor 테이블에서 J로 시작하는 이름과 글자수 조회 (공백 X, 정렬은 글자수가 많은 사람 순으로)
 
 -- 8. film 테이블에서 description에서 of 이전 문장만 중복 없이 10개만 추출해서 조회
-
+SELECT distinct substr(description, 1, instr(description, 'of')-2) "of 이전 문장"
+FROM film
+ORDER BY 1 DESC
+LIMIT 10;
 -- 9. film 테이블에서 replacement_cost 최소 비용과 최대 비용 조회
+SELECT min(replacement_cost) "최소 비용", max(replacement_cost)"최대 비용"
+FROM film;
