@@ -303,3 +303,8 @@ WHERE (ifnull(dept_code, '부서없음'), salary)
 
 
 
+
+
+
+
+
