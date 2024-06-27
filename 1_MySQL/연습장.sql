@@ -137,7 +137,13 @@ DISTINCT
  -- 실습문제 ( 테이블 : employee) --
  -- 1. 부서코드(dept_code)가 'D1' 인 사원들의 사원명(emp_name), 급여(salary), 부서코드만 조회
  SELECT emp_name, salary, dept_code
-
+ FROM employee
+ WHERE dept_code = 'D1';
+ 
+ -- 2. 부서코드가 'D1' 이 아닌 사원들의 사번(emp_id), 사원명(emp_name), 부서코드 조회
+ SELECT emp_id, emp_name, dept_code
+ FROM employee
+ WHERE dpet_code <> 'D1';
 
 
 
