@@ -1,400 +1,373 @@
-
-
 /*
- - 데이터 베이스 : 데이터(DATA) + 베이스(base)
- - DBMS : Database Management System의 약자, 데이터베이스 관리 시스템
- - CRUD : Create Read UPdate Delete의 약자
- - 관계형(Relational) 데이터베이스
- 1. 가장 대표적인 데이터베이스 시스템
- 2. 데이터를 테이블 형태로 저장하고 여러 테이블을 조합하여 비즈니스 관계를 도출하는 구조
- 3. 데이터의 중복을 최소화할 수 있으며 사용하기 편리하고 데이터의 무결성, 트랜잭션 처리 등 데이터 베이스 관리 스스템으로 뛰어난 성능을 보여준다.
- 
- -SQL(Structured Query Language)
-: 관계형 데이터베이스에서 데이터를 조회하거나 조작하기 위해 사용하는 표준 검색 언어
+	함수 : 전달된 컬럼값을 읽어들여서 함수를 실행한 결과를 반환
+    
+    - 단일행 함수 : N개의 값을 읽어서 N개의 결과값 리턴 (매 행마다 함수 실행 결과 반환)
+    - 그룹 함수 : N 개의 값을 읽어서 1개의 결과값 리턴 ( 그룹별로 함수 실행 결과 반환 )
+    
+	>> SELECT 절에 단일행 함수와 그룹 함수는 함께 사용하지 못함!
+		왜? 결과 행의 개수가 다르기 떄문에!
+        
+	>> 함수를 사용할 수 있는 위치 ; SELECT, WHERE, ORDER BY, GROUP BY, HAVING
 
-- SQL 종류
-1. DML(DATA Manipulation Language) : 데이터 조작어
-	- 실제 데이터를 조작하기 위해 사용하는 언어
-    (INSERT : 추가, UPDATE : 수정, DELETE : 삭제, SELECT)
-2. DQL(Data Query Language) : 데이터 질의어
-	- 데이터를 조회(검색)하기 위해 사용하는 언어 (SELECT : 조회)
-3. DCL(Data Control Language) : 데이터 질의어
-	- DBMS에 대한 보안, 무결성, 복구 등 DBMS를 제어하기 위한 언어
-    (GRANT : 권한 부여 , REVOKE : 권한 회수)
-4. DDL(Data Definition Language) : 데이터 정의어
-	- DBMS의 구조를 정의하거나 변겨으 삭제하기 위해 사용하는 언어
-    (CREATE : 생성, ALTER : 수정, DROP : 삭제) - 테이블 변경과 관련
-5. TCL(Transaction Control Languague) : 트랜잭션을 제어하는 언어
-	(COMMIT : 실행, ROLLBACK : 취소)
 */
 
+-- 단일행 함수
+
 /*
-SELECT 컬럼 [컬럼, ....]
-FROM 테이블명;
+	문자 처리 함수
+    
+    LENGTH : 해당 문자열값의 BYTE 길이 수 반환
+    - 한글 한글자 -> 3BYTE
+    - 영문자, 숫자, 특수문자 한글자 -> 1BYTE
+    CHAR_LENGTH : 해당 문자열 값의 글자 수 반환
 
-- 테이블에서 데이터를 조회할 떄 사용하는 SQL 문
-- SELECT를 통해서 조회된 결과를 RESULT SET 이라고 한다. (즉,조회된 행들의 집합)
-- 조회하고자 하는 컬럼들은 반드시 FROM 절에 기술한 테이블에 존재하는 컬럼이어야 한다.
-- 모든 컬럼을 조회할 경우 컬럼명 대신 * 기호 사용
 */
+SELECT 
+	length('데이터베이스'), char_length('데이터베이스'),
+	char_length('database'), char_length('database');
 
--- employee 테이블에 전체 사원의 모든 컬럼(*) 정보 조회
-SELECT *
-FROM employee;
-
--- employee 테이블의 전체 사원들의 사번(emp_id), 이름(emp_name), 급여(salary)만을 조회
-SELECT emp_id, emp_name, salary
-FROM employee;
-
--- 관례상 대문자로 작성
-
--- 실습문제 ------
-
--- 1. job 테이블의 모든 정보 조회
-SELECT *
-FROM job;
-
--- 2. job 테이블의 직급 이름(job_name) 조회
-SELECT job_name
-FROM job;
-
--- 3. department 테이블의 모든 정보 조회
-SELECT *
-FROM department;
-
--- 4. employee 테이블의 직원명(emp_name), 이메일(email), 전화번호(phone), 입사일 (hire_date) 정보만 조회
-SELECT emp_name, email, phone, hire_datee
-FROM emlpoyee;
-
--- 5. employee 테이블의 입사일(hire_date), 직원명(emp_name), 급여(salary) 조회
-SELECT hire_date, emp_name, salary
+-- 사원명(emp_name), 사원명의 글자수, 이메일(email), 이메일의 글자수 조회
+SELECT emp_name, char_length(emp_name), email, char_length(email)
 FROM employee;
 
 /*
-	컬럼 산술 연산
-	- SELECT 절에 컬럼명 입력 부분에 산술연산자를 사용하여 결과를 조회할 수 있다.
-    
--- employee 테이블에서 직우너명(emp_name), 직원 연봉(salary*12) 조회
-SELECT emp_name, salary, salary*12
-FROM employee;
-
-/*
-	컬럼 별칭
-    컬럼 as 별칭 / 컬럼 as "별칭" / 컬럼 별칭 / 컬럼 "별칭"
-    
-    - 산술연산을 하면 컬럼명이 지저분해진다. 이때 컬럼명에 별칭을 부여해서 깔끔하게 보여줄 수 있다.
-    - 별칭을 부여할 떄 띄어쓰기 혹은 특수문자가 포함될 경우 반드시 큰따음표(")로 감싸준다.
-    
-SELECT
-	emp_name 직원명
-    salary "직원 월급"
-    salary * 12 as 연봉
-FROM employee;
-
-리터럴
-- SELECT 절에 리터럴을 사용하면 테이블에 존재하는 데이터처럼 조회가 가능
--- employee 테이블에서 사번(emp_id), 직원명(emp_name), 급여(salary), 단위(원) 조회
-SELECT emp_id, emp_name, salary '원'
-FROM employee;
-
-DISTINCT
- - 컬럼에 중복된 값들을 한번씩만 표시하고자 할 떄 사용
- 
- -- employee테이블에 직급코드(job_code) 조회
- SELECT DISTINCT job_code
- FROM employee;
- 
- -- employee 테이블에 부서코드(dept_code) 조회
- SELECT DISTINCT dept_code
- FROM employee;
- 
- -- employee 테이블에 직급코드 (job_code), 부서코드(dept_code) 조회
- -- 유의사항! DISTINCT 는 SELECT 절에 딱 한번만 기술 가능
- SELECT DISTINCT job_code, dept_code
- FROM employee;
- 
- WHERE 절
- 
- SELECT 컬럼, 컬럼, ...
- FROM 테이블명
- WHERE 조건식;
- 
- - 조회하고자 하는 테이블로부터 특정 조건에 만족하는 데이터만 조회하하고자 할 떄 사용
- - 이떄 WHERE 절에 조건식을 제시 
- - 조건식에는 다양한 연산자 사용 가능
- 
- 비교 연산자
- >, <, >=, <= : 대소 비교
- = : 같은지 비교
- !=, <> : 같지 않은지 비교
- 
- -- employee에서 부서코드(dept_code)가 'D9'인 사우너들만 조회(이떄, 모든 컬럼 조회)
- 
- SELECT *
- FROM employee
- WHERE dept_code = 'D9';
- 
- -- 실습문제 ( 테이블 : employee) --
- -- 1. 부서코드(dept_code)가 'D1' 인 사원들의 사원명(emp_name), 급여(salary), 부서코드만 조회
- SELECT emp_name, salary, dept_code
- FROM employee
- WHERE dept_code = 'D1';
- 
- -- 2. 부서코드가 'D1' 이 아닌 사원들의 사번(emp_id), 사원명(emp_name), 부서코드 조회
- SELECT emp_id, emp_name, dept_code
- FROM employee
- WHERE dpet_code <> 'D1';
-
---3. 급여가 400만원 이상인 사원들의 사원명, 부서코드, 급여 조회
-SELECT emp_name, dept_code, salary
-FROM employee
-WHERE salary >= 4000000;
-
---4. 재직중(ent_yn 컬럼값이 'N')인 사원들의 사번, 사원명 입사일(hire_date) 조회
-SELECT emp_id, emp_name, hire_date, ent_yn
-FROM employee
-WHERE ent_yn = 'N';
-
--- OR(또는), AND(그리고)
--- 부서코드가 'D6' 이거나 급여가 300만원 이상인 사원들의 사원명, 부서코드 , 급여 조회a
-SELECT emp_name, dept_code, salary
-FROM employee
-WHERE dept_code = 'D6' OR salary >= 30000000;
-
--- 급여가 350만원 이상 600 만원 이하를 받는 사원들의 사원명(emp_name), 사번(emp_id), 급여(salary) 조회
-SELECT emp_name, emp_id, salary
-FROM employee
-WHERE 350000 <= salary AND salary <= 6000000;
-
-/*
-BETWEEN AND
-	- 조건식에서 사용되는 구문
-    - 몇 이상 몇 이하인 범위에 대한 조건을 제시할 떄 사용 되는 연산자
-    비교대상컬럼 BETWEEN 하한값 AND 상한값
+	INSTR(컬럼 | '문자열', '찾으려는 문자열')
+    - 특정 문자열에서 찾고자 하는 문자열의 위치 반환
+    - 없으면 0 반환
 */
--- 급여가 350만원 이상 600만원 이하를 받는 사원들의 사원명(emp_name), 사번(emp_id), 급여(salary) 조회
-SELECT emp_name, emp_id, salary
-FROM employee
-WHERE salary BETWEEN 3500000 AND 6000000;
+SELECT instr('AABAACAABBAA', 'B'), instr('AABAACAAASDASD', 'D');
 
--- 입사일(hire_date)이 '1990-01-01' ~ '2001-01-01' (모든 컬럼 조회)
-SELECT *
+-- 's'가 포함되어 있는 이메일 중 이메일, 이메일의 @ 위치 조회
+SELECT email, instr(email, '@')
 FROM employee
-WHERE hire_date BETWEEN '1990-01-01' AND '2001-01-01';
+WHERE email LIKE '%s%';
 
 /*
-	LIKE
-    - 비교하고자 하는 컬럼값이 내가 제시한 특정 패턴에 만족될 경우 조회
-    
-    비교대상컬럼 LIKE '특정패턴'
-    - 특정패턴에는 '%', '_'를 와일드카드로 사용
-    
-    '%' : 0글자 이상
-    비교대상컬럼 LIKE '문자%' => 비교대상컬럼값이 문자로 "시작"되는걸 조회
-    비교대상컬럼 LIKE '%문자' => 비교대상컬럼값이 문자로 "끝"나는걸 조회
-    비교대상컬럼 LIKE '%문자%' => 비교대상컬럼값이 문자가 "포함" 되는걸 조회 (키워드 검색)
-    
-    '_' : 1글자
-    비교대상컬럼 LIKE '_문자' => 비교대상컬럼값에 문자앞에 무조건 한글자가 올 경우 조회
-    비교대상컬럼 LIKE '__문자' => 비교대상컬럼값에 문자앞에 무조건 두글자가 올 경우 조회
-    비교대상컬럼 LIKE '_문자_' => 비교대상컬럼값에 문자 앞과 뒤에 무조건 한글자씩 올 경우 조회
-
+	LPAD|RPAD(컬럼|'문자열', 최종적으로 반환할 문자의 길이, '덧붙이고자 하는 문자')
+    - 문자열에 덧붙이고자 하는 문자를 왼쪽 또는 오른쪽에 덧붙여서 최종적으로 반환할 문자의 길이만큼 문자열 반환
 */
-
--- 사원들 중 성이 전씨인 사원들의 사원명(emp_name), 급여(salary), 입사일(hire_date) 조회
-SELECT emp_name, salary, hire_date
-FROM employee
-WHERE emp_name LIKE '전%';
-
--- 이름 중에 '하'가 포함된 사원들의 사원명, 주민번호(emp_no), 전화번호(phone) 조회
-SELECT emp_name, emp_no, phone
-FROM employee
-WHERE emp_name LIKE '%하%';
-
--- 전화번호의 3번째 자리가 1인 사원들의 사번(emp_id), 사원명, 전화번호, 이메일(email)조회
-SELECT emp_id, emp_name, phone, email
-FROM employee
-WHERE phone LIKE '__1%';
-
--- 이메일 중 _ 앞글자가 3글자인 사원들의 사번, 이름, 이메일 조회
--- 예) sun_di@kh.or.kr
--- ESCAPE OPTION : 나만의 와일드 카드를 만들어서 사용!
-SELECT emp_id, emp_name, email
-FROM employee
--- WHERE email LIKE '___#_%' ESCAPE '#';
-WHERE email LIKE '___\_%';
-
--- 위의 사원들 이외의 사원들 조회 논리 부정 연산자 : NOT
-SELECT emp_id, emp_name, email
-FROM employee
--- WHERE NOT email LIKE '___%_$' ESCAPE '$';
-WHERE email NOT LIKE '___$_%' ESCAPE '$';
-
+SELECT lpad('hello', 10, '*'), rpad('hello', 10, '+');
 
 /*
-	IS NULL / IS NOT NULL
-    - 컬럼값이 NULL이 있을 경우  NULL 값 비교에 사용되는 연산자 
-*/
--- 보너스를 받지 않는 사원 (bonus 값이 null) 들의
--- 사번(emp_id), 이름(emp_name), 급여(salary), 보너스(bonus) 조회
-SELECT emp_id, emp_name, salary, bonus
-FROM employee
-WHERE bonus IS NULL;
-
--- 부서배치를 아직 받지 않고 보너스는 받는 사원들의 이름, 보너스, 부서코드(dept_code) 조회
-SELECT emp_name, bonus, dept_code
-FROM employee
-WHERE dept_code IS NULL AND bonus IS NOT NULL;
-
-/*
-	IN
-    - 비교대상컬럼값이 내가 제시한 목록 중에 일치하는 값이 있는지 비교대상컬럼 IN ('값1', '값2', ....) (검색필터)
-*/
-    -- 부서코드가 D5, D6, D8인 부서원들의 이름, 부서코드, 급여 조회
-    SELECT emp_name, dept_code, salary
-    FROM employee
-    WHERE dept_code IN ('D5', 'D6', 'D8');
-    
-    /*
-		연산자 우선순위
-        0. ()
-        1. 산술연산자 : +, -, *, /, DIV, %, MOD
-        2. 비교연산자 : =. !=, <>, <, <=, >, >=
-        3. IS NULL / LIKE / IN
-        4. BETWEEN AND 
-        5. NOT
-        6. AND
-        7. OR
-    
-    */
-
-/*
-	ORDER BY
-    - SELECT문 가장 마지막 줄에 작성 뿐만 아니라 실행순서 또한 마지막에 실행
-    
-    3 SELECT 컬럼, 컬럼, ...
-    1 FROM 테이블명
-    2 WHERE 조건식
-    4 ORDER BY 정렬하고자 하는 하는 컬럼값 [ASC|DESC];
+	TRIM(컬럼|'문자열', 최종적으로 반환할 문자의 길이, '덧붙이고자 하는 문자')
+    - 문자열에 덧붙이고자 하는 문자를 왼쪽 또는 오른쪽에 덧붙여서 최종적으로 반환할 문자의 길이만큼 문자열 반환
     
 */
+SELECT trim('		KH		');
+SELECT trim(BOTH ' ' FROM ' 	K H		');
 
--- 전체 사원의 사원명, 보너스 조회
-SELECT emp_name, bonus
-FROM employee
--- ORDER BY bonus; -- 보너스 기준 오름차순 정렬 (null이 맨앞)
-ORDER BY 2 DESC; -- 보너스 기준 내림차순 정렬 (null이 맨뒤)
+SELECT trim(LEADING 'Z' FROM 'ZZZKHZZZ');
+SELECT ltrim('		K H 		');
+
+SELECT trim(TRAILING 'Z' FROM 'ZZZKHZZZ');
+SELECT rtrim('		K H 		');
 
 /*
-	LIMIT
-    - ORDER BY 절 보다 뒤에 조건을 걸고 싶을 때 사용
-    - 출력되는 행 수를 제한하는 MYSQL 전용 비표준 구문
-    - 데이터 양을 제한하고자 할 때 유용 (페이징 처리)
+	SUBSTR|SUBSTRING(컬럼|'문자열', 시작 위치 값, 추출할 문자 개수)
+    - 문자열에서 특정 문자열을 추출해서 반환
+	
+*/
+SELECT substr('PROGRAMING', 5, 2); 
+SELECT substr('PROGRAMUNG', 1, 6);
+SELECT substr('PROGRAMING', -8, 3);
+
+-- 여자 사원들의 이름(emp_name), 주민등록번호(emp_no) 조회
+SELECT emp_name, emp_no
+FROM employee
+WHERE substr(emp_no, 8, 1) IN (2, 4);
+
+-- 남자 사원들의 이름, 주민등록번호 조회
+SELECT emp_name, emp_no
+FROM employee
+WHERE substr(emp_no, instr(emp_no, '-') + 1, 1) IN (1, 3);
+
+/*
+	LOWER : 다 소문자로 변경한 문자열 반환
+    UPPER : 다 대문자로 변경한 문자열 반환
+*/
+SELECT lower('Welcome To My SQL'), upper('Welcome To MYSQL');
+
+/*
+	REPLACE(컬럼|'문자열', '바꾸고 싶은 문자열', '바꿀 문자열')
+    - 특정 문자열로 변경하여 반환
 */
 
--- 연봉이 높은 5 명의 사원의 사원명, 급여 조회
-SELECT emp_name, salary
-FROM employee
-ORDER BY salary DESC
-LIMIT 5;
+SELECT replace('서울특별시 강남구 역삼동', '강남구', '서초구');
 
--- LIMIT 절은 두 개의 값이 있을 수 있음!
--- 첫번쨰 값은 오프셋(offset, 0부터 시작) 시작 행을 지정
--- 두번째 값은 반환할 최대 행 수를 지정
-SELECT emp_name, salary
-FROM employee
-ORDER BY salary DESC
-LIMIT 0, 10;
-
-SELECT emp_name, salary
-FROM employee
-ORDER BY salary DESC
-LIMIT 10 OFFSET 0;
+/*
+	CONCAT : 문자열을 하나로 합친 후 결과 반환
+*/
+SELECT concat('가나다라', 'ABCD', '1234'); -- 가나다라ABCD1234
 
 -- 실습문제 --
--- 1. 직급코드(job_code)가 J7이거나 J2인 사원들 중 급여(salary)가 200만원 이상인 사원들의 모든 컬럼 조회
-
-SELECT *
-FROM employee
-WHERE job_code IN('J7', 'J2') AND salary >= 2000000;
-
--- 2. 사수가 없고 부서배치도 받지 않은 사원들의 사원명(emp_name), 사수사번(manager_id), 부서코드(dept_code) 조회
+-- 1. 이메일의 kh.or.kr을 gmail.com으로 변경해서 이름, 변경 전 이메일, 변경 후 이메일 조회
 SELECT
+	emp_name,
+    email "변경 전",
+    replace(email, 'kh.or.kr', 'gmail.com') "변경 후"
+    FROM employee;
 
+-- 2. 사원명과 주민등록번호(000000-0******)으로 조회
+-- replace
+SELECT emp_name, replace(emp_no, substr(emp_no, -6, 6), "******")
+FROM employee;
 
+-- rpad
+SELECT emp_name, rpad(substr(emp_no, 1, 8), char_length(emp_no), "*")
+FROM employee;
 
+-- concat
+SELECT emp_name, concat(substr(emp_no, 1, 8), "******")
+FROM employee;
 
+-- 3. 사원명, 이메일, 이메일에서 추출한 아이디 조회 (@ 앞)
+-- replace
+SELECT emp_name, email, replace(email, '@kh.or.kr', '')
+FROM employee;
 
+-- substr, instr
+SELECT emp_name, email, substr(email, 1, instr(email, '@')-1)
+FROM employee;
 
+-- trim
+SELECT emp_name, email, trim(both '@kh.or.kr' from email)
+FROM employee;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
+	숫자 처리 함수
+    ABS : 절대값 반환
 
 */
+SELECT abs(5.6), abs(-10);
+
+/*
+	숫자 DIV 숫자 = 숫자 / 숫자
+    숫자 MOD 숫자 = 숫자 % 숫자 = MOD(숫자, 숫자)
+*/
+SELECT
+	10 DIV 3, 10 / 3,
+    10 MOD 3, 10 % 3, mod(10, 3);
+    
+/*
+	ROUND(숫자, [위치])
+    - 반올림한 결과를 반환
+*/
+SELECT round(123.567), round(123.567, 2), round(123.567, -1);
+
+/*
+	CEIL : 올림 처리해서 반환
+    FLOOR : 버림 처리해서 반환
+*/
+SELECT ceil(123.152), floor(123.952);
+
+/*
+	TRUNCATE(숫자, 위치)
+    - 위치 지정하여 버림 처리해서 반환
+*/
+SELECT truncate(123.456, 1), truncate(123.456, -1);
+
+/*
+	날짜 처리 함수 
+    NOW, CURRENT_TIMESTAMP : 현재 날짜와 시간 반환
+    CURDATE, CURRENT_DATE : 현재 날짜 반환
+    CURTIME, CURRENTT_TIME : 현재 시간 반환
+
+*/
+SELECT
+	now(), current_timestamp(),
+    curdate(), current_date(),
+    curtime(), current_time();
+    
+    /*
+		DAYOFYEAR : 날짜가 해당 연도에서 몇 번쨰 날인지 반환
+        DAYMONTH : 날짜가 해당 월에서 몇 번쨰 날인지 반환
+        DAYOFWEEK : 날짜가 해당 주에서 몇 번쨰 날인지 반환 (일요일 = 1, 토요일 = 7)
+    */
+    SELECT dayofyear(now()), dayofmonth(now()), dayofweek(now());
+    
+    /*
+		PERIOD_DIFF(날짜, 날짜) : 두 기간의 차이를 숫자로 반환
+        DATEDIFF(날짜, 날짜) : 두 날짜 사이의 일수를 숫자로 반환
+        TIMEDIFF(날짜, 날짜) : 두 시간의 차이를 날짜 형식으로 반환
+		TIMESTAMPDIFF(날짜 단위, 날짜, 날짜) : 두 날짜 사이의 기간을 날짜단위에 따라 변환
+        
+        * 날짜단위 : YEAR(연도), QUARTER(분기). MONTH(월), WEEK(주), DAY(일), HOUR(시간), MINUTE(분), SECOND(초)
+    */
+    
+    SELECT period_diff(202406, 202411), period_diff(202412, 202406); -- -5, 6
+    SELECT datediff('2024-12-31', now()), timediff('2025-31-31 00:00:00', now());
+    
+    -- 직원명, 입사일, 근무 일 수, 근무 개월 수 , 근무 년 수 조회
+    SELECT
+		emp_name, hire_date,
+        timestampdiff(day, hire_date, now()) "근무 일 수",
+        timestampdiff(month, hire_date, now()) "근무 개월 수",
+	    timestampdiff(year, hire_date, now()) "근무 년 수"
+	FROM employee;
+
+/*
+	ADDDATE(날짜, INTERVAL 숫자 날짜 단위)
+    ADDTIME(날짜, 시간정보)
+    - 특정 날짜에 입력받은 정보만큼 더한 날짜를 반환
+    
+    SUBDATE(날짜, INTERVAL 숫자 날짜단위)
+    ADDTIME(닐찌, 시간정보)
+    - 특정 날짜에 입력받은 정보만큼 더한 날짜를 반환
+
+	SUBDATE(날짜, INTERNAL 숫자날짜단위)
+    SUBTIME(날짜, 시간정보)
+      - 특정 날짜에 입력받은 정보만큼 뺀 날짜를 반환
+*/
+
+SELECT
+	now(),
+    adddate(now(), interval 10 year),
+    subdate(now(), interval 15 year),
+    addtime(now(), "01:10:00"),
+    subtime(now(), "01:00:00");
+    
+-- 직원명(emp_name), 입사일(hire_date), 입사 후 6개월이 된 날짜를 조회
+SELECT emp_name, hire_date, adddate(hire_date, interval 6 month)
+FROM employee;
+
+/*
+	LAST_DAY : 해당 월의 마지막 날짜를 반환
+*/
+SELECT last_day(now());
+
+/*
+	YEAR, MONTH, DAY, HOUR, MINUTE, SECOND
+    - 특정 날짜에 연도, 월, 일, 시간, 분, 초 정보를 각각 추출해서 반환
+*/
+SELECT
+	year(now()), month(now()), day(now()),
+    hour(now()), minute(now()), second(now());
+    
+-- 연도별 오래된 순으로 직원명, 입사년도, 입사월, 입사일 조회
+
+SELECT
+	emp_name,
+    year(hire_date) 입사년도,
+    month(hire_date) 입사월,
+    day(hire_date) 입사일
+
+FROM employee
+-- ORDER BY hire_date;
+ORDER BY 입사년도, 입사월, 입사일;
+
+/*
+	포맷 함수
+    FORMAT(숫자, 위치) : 숫자에 3단위씩 콤마 추가해서 반환
+    DATE_FORMAT (날짜, 포맷형식) : 날짜 형식을 변경해서 반환
+*/
+SELECT salary, format(salary, 0)
+FROM employee;
+
+SELECT
+	now(),
+    date_format(now(), '%Y.%m.%d'), -- %Y : 년도, %m : 월, %d : 일
+	date_format(now(), '%Y.%m.%d %T'); -- %T : 시간 전체, %H : 시, %i : 분, %s : 초
+    
+-- 직원명, 입사일 (2024년 06월 19일 14시 05분 30초) 조회
+SELECT emp_name, date_format(hire_date, '%Y년 %m월 %d일 %H시 %i분 %초')
+FROM employee;
+
+/*
+	null 처리 함수
+    
+    COALESCE|IFNULL(값, 값이 NULL일 경우 반환할 값)
+
+*/
+SELECT emp_name, coalesce(bonus, 0)
+FROM employee;
+
+-- 전 사원의 직원며으 보너스, 보너스 포함 연봉 (급여 + 급여 * 보너스) * 12 조회
+SELECT emp_name, bonus, (salary + salary * ifnull(bonus, 0)) * 12
+FROM employee;
+
+-- 직원명, 부서코드(dept_code) 조회 (부서코드가 없으면 '부서없음')
+SELECT emp_name, ifnull(dept_code, '부서없음')
+FROM employee;
+
+/*
+	NULLIF(값1, 값2)
+    - 두 개의 값이 동일하면 null 반환, 두 개의 값이 동일하지 않으면 값1 반환
+*/
+SELECT nullif('123', '123'), nullif('123', '456'); -- null, 123
+
+/*
+	IF(값1, 값2, 값3) | IF(조건, 조건이 True인 경우, 조건이 False인 경우)
+    - 값1이 null이 아니면 값2 반환, null이면 값3 반환
+    - 조건에 해당하면 두번쨰 값 반환, 해당하지 않으면 마지막 값 반환
+*/
+SELECT emp_name, bonus, if(bonus, 0.7, 0.1)
+FROM employee;
+
+-- 직원명, 부서 코드가 있으면 '부서있음', 없으면 '부서없음' 조회
+SELECT 
+	emp_name, dept_code,
+    -- if(dept_code is not null, '부서있음', '부서없음')
+	if(dept_code is null, '부서없음', '부서있음')
+FROM employee;
+
+-- 사번, 사원명 주민번호(emp_no), 성별(남, 여) - emp_no 활용해서 조회
+SELECT 
+	emp_id, emp_name, emp_no,
+    if(substr(emp_no,8, 1) =1, '남', '여') 성별
+FROM employee;
+
+-- 사원명으 직급코드(job_code), 기존급여(salary), 인상된 급여 조회
+-- 정렬 : 직급코드 J1부터, 인상된 급여 높은 순서대로
+-- 직급코드가 J7인 사원은 급여를 10% 인상
+-- 직급코드가 J6인 사원은 급여를 15% 인상
+-- 직급코드가 J5인 사원은 급여를 20% 인상
+-- 그 외의 직급의 사원은 급여를 5%만 인상
+
+SELECT 
+emp_name, job_code, salary, 
+format(if(job_code = 'J7', salary * 1.1,
+			if(job_code = 'J6', salary * 1.15,
+					if(job_code = 'J5', salary * 1.2, salary * 1.05))), 0) "인상된 급여"
+
+FROM employee
+ORDER BY 2, 4 DESC;
+
+/*
+	CASE WHEN 조건식 1 THEN 결과값 1
+		 WHEN 조건식 2 THEN 결과값 2
+         ......
+				ELSE 결과값 N
+		
+        END
+        
+        -> if ~ else if ~ else 문과 유사 
+
+*/
+
+SELECT 
+		emp_name, job_code, salary,
+        format(case when job_code = 'J7' then salary * 1.1
+					when job_code = 'J6' then salary * 1.15
+                    when job_code = 'J5' then salary * 1.2
+                    else salray * 1.05
+                    end, 0) "인상된 급여"
+		FROM employee
+        ORDER BY 2, 4 DESC;
 
 
+-- 사원명, 급여, 급여 등급(1 ~ 4등급) 조회
+-- salary 값이 500 만원 초과일 경우 1등급
+-- salary 값이 500 만원 이하 350 만원 초과일 경우 2 등급
+-- salary 값이 350만원 이하 200만원 초과일 경우 3 등급
+-- 그외의 경우 4등급
+SELECT
+emp_name, salary, case when salary > 500000 then '1등급'
+					   when salary > 3500000 then '2등급'
+                       when salary > 2000000 then '3등급'
+                       else '4등급'
+					   end 급여등급
 
-
-
-
-
-
-
-
-
-
-
+FROM employee;
 
 
 
