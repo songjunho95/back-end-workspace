@@ -1,373 +1,448 @@
 /*
-	함수 : 전달된 컬럼값을 읽어들여서 함수를 실행한 결과를 반환
-    
-    - 단일행 함수 : N개의 값을 읽어서 N개의 결과값 리턴 (매 행마다 함수 실행 결과 반환)
-    - 그룹 함수 : N 개의 값을 읽어서 1개의 결과값 리턴 ( 그룹별로 함수 실행 결과 반환 )
-    
-	>> SELECT 절에 단일행 함수와 그룹 함수는 함께 사용하지 못함!
-		왜? 결과 행의 개수가 다르기 떄문에!
-        
-	>> 함수를 사용할 수 있는 위치 ; SELECT, WHERE, ORDER BY, GROUP BY, HAVING
+	JOIN
+    - 두 개 이상의 테이블에서 데이터를 조회하고자 할 떄 사용하는 구문
+    - 조회 결과는 하나의 결과물(RESULT SET)으로 나옴
+    - 관계형 데이터베이스는 최소한의 데이터로 각각의 테이블에 담고 있음
+    (증복을 최소화하기 위해 최대한 쪼개서 관리)
+	  부서 데이터는 부서 테이블, 사원에 대한 데이터는 사원 테이블, 직급 테이블 등....
+      
+      만약 어떤 사원이 어떤 부서에 속해있는지 부서명과 같이 조회하고 싶다면?
+      만약 어떤 사원이 어떤 직급인지 직급명과 같이 조회하고 싶다면?
+      
+      => 즉, 관계형 데이터베이스에서 SQL 문을 이용한 테이블 간에 "관계"를 맺어 원하는 데아터만 조회하는 방법
+
 
 */
-
--- 단일행 함수
-
 /*
-	문자 처리 함수
+	1. 내부 조인(INNER JOIN)
+    - 연결시키는 컬럼의 값이 일치하는 행들만 조인되어 조회 (일치하는 값이 없는 행은 조회 X)
     
-    LENGTH : 해당 문자열값의 BYTE 길이 수 반환
-    - 한글 한글자 -> 3BYTE
-    - 영문자, 숫자, 특수문자 한글자 -> 1BYTE
-    CHAR_LENGTH : 해당 문자열 값의 글자 수 반환
+    1) WHERE 구문
+    SELECT 컬럼, 컬럼, ...
+    FROM 테이블1, 테이블2
+    WHERE 테이블1.컬럼명 = 터이블2.컬럼명;
+    
+    - FROM 절에 조회하고자 하는 테이블들을 콤마(,)로 구분하여 나열
+    - WHERE 절에 매칭시킬 컬럼명에 대한 조건 제시
+    
+    2) ANSI(미국국립표준협회 : 산업표준을 제정하는 단체) 표준 구문 -> 다른 DB에서도 사용 가능!
+    SELECT 컬럼, 컬럼, ...
+    FROM 테이블1
+    [INNER] JOIN 테이블2 ON (테이블1.컬럼명 = 테이블2.컬럼명);
+    
+    - FROM 절에서 기준이 되는 테이블을 기술
+	- JOIN 절에서 같이 조회하고자 하는 테이블을 기술 후 매칭 시킬 컬럼에 대한 조건을 기술 (ON, USING)
+    - 연결에 사용하려는 컬럼명이 같은 경우 ON 구문 대신 USING(컬러명) 구문 사용
+    
 
 */
-SELECT 
-	length('데이터베이스'), char_length('데이터베이스'),
-	char_length('database'), char_length('database');
+-- 1) 연결할 두 컬럼명이 다른 경우 (employee : dept-code - department : dept_id)
+-- 사번(emp_id), 사원명(emp_name), 부서코드(dept_code), 부서명(dept_title) 조회
+SELECT emp_id, emp_name, dept_code, dept_title
+FROM employee, department
+WHERE dept_code = dept_id;
 
--- 사원명(emp_name), 사원명의 글자수, 이메일(email), 이메일의 글자수 조회
-SELECT emp_name, char_length(emp_name), email, char_length(email)
-FROM employee;
-
-/*
-	INSTR(컬럼 | '문자열', '찾으려는 문자열')
-    - 특정 문자열에서 찾고자 하는 문자열의 위치 반환
-    - 없으면 0 반환
-*/
-SELECT instr('AABAACAABBAA', 'B'), instr('AABAACAAASDASD', 'D');
-
--- 's'가 포함되어 있는 이메일 중 이메일, 이메일의 @ 위치 조회
-SELECT email, instr(email, '@')
+-- >> ANSI 구문
+SELECT emp_id, emp_name, dept_code, dept_title
 FROM employee
-WHERE email LIKE '%s%';
+JOIN department ON (dept_code = dept_id);
 
-/*
-	LPAD|RPAD(컬럼|'문자열', 최종적으로 반환할 문자의 길이, '덧붙이고자 하는 문자')
-    - 문자열에 덧붙이고자 하는 문자를 왼쪽 또는 오른쪽에 덧붙여서 최종적으로 반환할 문자의 길이만큼 문자열 반환
-*/
-SELECT lpad('hello', 10, '*'), rpad('hello', 10, '+');
+-- 일치하는 값이 없는 행은 조회에서 제외된 것 확인!
+-- dept_code가 null 사원 조회 x
 
-/*
-	TRIM(컬럼|'문자열', 최종적으로 반환할 문자의 길이, '덧붙이고자 하는 문자')
-    - 문자열에 덧붙이고자 하는 문자를 왼쪽 또는 오른쪽에 덧붙여서 최종적으로 반환할 문자의 길이만큼 문자열 반환
-    
-*/
-SELECT trim('		KH		');
-SELECT trim(BOTH ' ' FROM ' 	K H		');
+-- 2) 연결할 두 컬럼명이 같은 경우 (employee : job_code - job : job_code)
+-- 사번, 사원명, 직급코드, 직급명(job_name) 조회
+SELECT emp_id, emp_name, job_code, job_name
+FROM employee, job
+WHERE job_code = job_code; -- ambiguous : 애매한, 모호한 / 에러 발생!
 
-SELECT trim(LEADING 'Z' FROM 'ZZZKHZZZ');
-SELECT ltrim('		K H 		');
+-- 해결방법 1) 테이블명 이용
+SELECT emp_id, emp_name, job.job_code, job_name
+FROM employee, job
+WHERE employee.job_code = job.job_code;
 
-SELECT trim(TRAILING 'Z' FROM 'ZZZKHZZZ');
-SELECT rtrim('		K H 		');
+-- >> ANSI 구문
+SELECT emp_id, emp_name, e.job_code, job_name
+FROM employee e
+JOIN job j ON (e.job_code = j.job_code);
 
-/*
-	SUBSTR|SUBSTRING(컬럼|'문자열', 시작 위치 값, 추출할 문자 개수)
-    - 문자열에서 특정 문자열을 추출해서 반환
-	
-*/
-SELECT substr('PROGRAMING', 5, 2); 
-SELECT substr('PROGRAMUNG', 1, 6);
-SELECT substr('PROGRAMING', -8, 3);
-
--- 여자 사원들의 이름(emp_name), 주민등록번호(emp_no) 조회
-SELECT emp_name, emp_no
+-- 두 컬럼명이 같을 때만 USING 구문 사용 가능!
+SELECT emp_id, emp_name, job_code, job_name
 FROM employee
-WHERE substr(emp_no, 8, 1) IN (2, 4);
+JOIN job USING (job_code);
 
--- 남자 사원들의 이름, 주민등록번호 조회
-SELECT emp_name, emp_no
+-- 자연조인(NATUARL JOIN) : 각 테이블마다 동일한 컬럼이 한 개만 존재할 경우
+-- 주의사항 ! 쓰지마세요
+SELECT emp_id, emp_name, job_code, job_name
 FROM employee
-WHERE substr(emp_no, instr(emp_no, '-') + 1, 1) IN (1, 3);
+NATURAL JOIN job;
 
-/*
-	LOWER : 다 소문자로 변경한 문자열 반환
-    UPPER : 다 대문자로 변경한 문자열 반환
-*/
-SELECT lower('Welcome To My SQL'), upper('Welcome To MYSQL');
+-- 직급이 대리인 사원의 사번(emp_id), 이름(emp_name), 직급명(job_name), 급여(salary) 조회
+-- 1) where 구문
+SELECT emp_id, emp_name, job_name, salary
+FROM employee e, job j
+WHERE e.job_code = j.job_code AND job_name = '대리';
 
-/*
-	REPLACE(컬럼|'문자열', '바꾸고 싶은 문자열', '바꿀 문자열')
-    - 특정 문자열로 변경하여 반환
-*/
-
-SELECT replace('서울특별시 강남구 역삼동', '강남구', '서초구');
-
-/*
-	CONCAT : 문자열을 하나로 합친 후 결과 반환
-*/
-SELECT concat('가나다라', 'ABCD', '1234'); -- 가나다라ABCD1234
+-- 2) ANSI 구문
+SELECT emp_id, emp_name, job_name, salary
+FROM employee
+JOIN job USING(job_code)
+WHERE job_name = '대리';
 
 -- 실습문제 --
--- 1. 이메일의 kh.or.kr을 gmail.com으로 변경해서 이름, 변경 전 이메일, 변경 후 이메일 조회
-SELECT
-	emp_name,
-    email "변경 전",
-    replace(email, 'kh.or.kr', 'gmail.com') "변경 후"
-    FROM employee;
+-- 1. 부서가 인사관리부인 사원들의 사번, 이름, 보너스 조회 (employee, department)
+SELECT * FROM employee;
+SELECT * FROM department;
 
--- 2. 사원명과 주민등록번호(000000-0******)으로 조회
--- replace
-SELECT emp_name, replace(emp_no, substr(emp_no, -6, 6), "******")
-FROM employee;
+-- >> where 구문
+SELECT emp_id, emp_name, bonus
+FROM employee, department
+WHERE dept_code = dept_id AND dept_title = '인사관리부';
 
--- rpad
-SELECT emp_name, rpad(substr(emp_no, 1, 8), char_length(emp_no), "*")
-FROM employee;
-
--- concat
-SELECT emp_name, concat(substr(emp_no, 1, 8), "******")
-FROM employee;
-
--- 3. 사원명, 이메일, 이메일에서 추출한 아이디 조회 (@ 앞)
--- replace
-SELECT emp_name, email, replace(email, '@kh.or.kr', '')
-FROM employee;
-
--- substr, instr
-SELECT emp_name, email, substr(email, 1, instr(email, '@')-1)
-FROM employee;
-
--- trim
-SELECT emp_name, email, trim(both '@kh.or.kr' from email)
-FROM employee;
-
-/*
-	숫자 처리 함수
-    ABS : 절대값 반환
-
-*/
-SELECT abs(5.6), abs(-10);
-
-/*
-	숫자 DIV 숫자 = 숫자 / 숫자
-    숫자 MOD 숫자 = 숫자 % 숫자 = MOD(숫자, 숫자)
-*/
-SELECT
-	10 DIV 3, 10 / 3,
-    10 MOD 3, 10 % 3, mod(10, 3);
-    
-/*
-	ROUND(숫자, [위치])
-    - 반올림한 결과를 반환
-*/
-SELECT round(123.567), round(123.567, 2), round(123.567, -1);
-
-/*
-	CEIL : 올림 처리해서 반환
-    FLOOR : 버림 처리해서 반환
-*/
-SELECT ceil(123.152), floor(123.952);
-
-/*
-	TRUNCATE(숫자, 위치)
-    - 위치 지정하여 버림 처리해서 반환
-*/
-SELECT truncate(123.456, 1), truncate(123.456, -1);
-
-/*
-	날짜 처리 함수 
-    NOW, CURRENT_TIMESTAMP : 현재 날짜와 시간 반환
-    CURDATE, CURRENT_DATE : 현재 날짜 반환
-    CURTIME, CURRENTT_TIME : 현재 시간 반환
-
-*/
-SELECT
-	now(), current_timestamp(),
-    curdate(), current_date(),
-    curtime(), current_time();
-    
-    /*
-		DAYOFYEAR : 날짜가 해당 연도에서 몇 번쨰 날인지 반환
-        DAYMONTH : 날짜가 해당 월에서 몇 번쨰 날인지 반환
-        DAYOFWEEK : 날짜가 해당 주에서 몇 번쨰 날인지 반환 (일요일 = 1, 토요일 = 7)
-    */
-    SELECT dayofyear(now()), dayofmonth(now()), dayofweek(now());
-    
-    /*
-		PERIOD_DIFF(날짜, 날짜) : 두 기간의 차이를 숫자로 반환
-        DATEDIFF(날짜, 날짜) : 두 날짜 사이의 일수를 숫자로 반환
-        TIMEDIFF(날짜, 날짜) : 두 시간의 차이를 날짜 형식으로 반환
-		TIMESTAMPDIFF(날짜 단위, 날짜, 날짜) : 두 날짜 사이의 기간을 날짜단위에 따라 변환
-        
-        * 날짜단위 : YEAR(연도), QUARTER(분기). MONTH(월), WEEK(주), DAY(일), HOUR(시간), MINUTE(분), SECOND(초)
-    */
-    
-    SELECT period_diff(202406, 202411), period_diff(202412, 202406); -- -5, 6
-    SELECT datediff('2024-12-31', now()), timediff('2025-31-31 00:00:00', now());
-    
-    -- 직원명, 입사일, 근무 일 수, 근무 개월 수 , 근무 년 수 조회
-    SELECT
-		emp_name, hire_date,
-        timestampdiff(day, hire_date, now()) "근무 일 수",
-        timestampdiff(month, hire_date, now()) "근무 개월 수",
-	    timestampdiff(year, hire_date, now()) "근무 년 수"
-	FROM employee;
-
-/*
-	ADDDATE(날짜, INTERVAL 숫자 날짜 단위)
-    ADDTIME(날짜, 시간정보)
-    - 특정 날짜에 입력받은 정보만큼 더한 날짜를 반환
-    
-    SUBDATE(날짜, INTERVAL 숫자 날짜단위)
-    ADDTIME(닐찌, 시간정보)
-    - 특정 날짜에 입력받은 정보만큼 더한 날짜를 반환
-
-	SUBDATE(날짜, INTERNAL 숫자날짜단위)
-    SUBTIME(날짜, 시간정보)
-      - 특정 날짜에 입력받은 정보만큼 뺀 날짜를 반환
-*/
-
-SELECT
-	now(),
-    adddate(now(), interval 10 year),
-    subdate(now(), interval 15 year),
-    addtime(now(), "01:10:00"),
-    subtime(now(), "01:00:00");
-    
--- 직원명(emp_name), 입사일(hire_date), 입사 후 6개월이 된 날짜를 조회
-SELECT emp_name, hire_date, adddate(hire_date, interval 6 month)
-FROM employee;
-
-/*
-	LAST_DAY : 해당 월의 마지막 날짜를 반환
-*/
-SELECT last_day(now());
-
-/*
-	YEAR, MONTH, DAY, HOUR, MINUTE, SECOND
-    - 특정 날짜에 연도, 월, 일, 시간, 분, 초 정보를 각각 추출해서 반환
-*/
-SELECT
-	year(now()), month(now()), day(now()),
-    hour(now()), minute(now()), second(now());
-    
--- 연도별 오래된 순으로 직원명, 입사년도, 입사월, 입사일 조회
-
-SELECT
-	emp_name,
-    year(hire_date) 입사년도,
-    month(hire_date) 입사월,
-    day(hire_date) 입사일
-
+-- >> ANSI 구문
+SELECT emp_id, emp_name, bonus
 FROM employee
--- ORDER BY hire_date;
-ORDER BY 입사년도, 입사월, 입사일;
+JOIN department ON (dept_code = dept_id)
+WHERE dept_title = '인사관리부';
 
-/*
-	포맷 함수
-    FORMAT(숫자, 위치) : 숫자에 3단위씩 콤마 추가해서 반환
-    DATE_FORMAT (날짜, 포맷형식) : 날짜 형식을 변경해서 반환
-*/
-SELECT salary, format(salary, 0)
-FROM employee;
+-- 2. 전체 부서의 부서코드, 부서명, 지역코드, 지역명 조회 (department, location)
+SELECT * FROM department; -- dept_id, dept_title, location_id
+SELECT * FROM location; -- local_code, local_name
 
-SELECT
-	now(),
-    date_format(now(), '%Y.%m.%d'), -- %Y : 년도, %m : 월, %d : 일
-	date_format(now(), '%Y.%m.%d %T'); -- %T : 시간 전체, %H : 시, %i : 분, %s : 초
-    
--- 직원명, 입사일 (2024년 06월 19일 14시 05분 30초) 조회
-SELECT emp_name, date_format(hire_date, '%Y년 %m월 %d일 %H시 %i분 %초')
-FROM employee;
+SELECT dept_id, dept_title, local_code, local_name
+FROM department
+JOIN location ON (location_id = local_code);
 
-/*
-	null 처리 함수
-    
-    COALESCE|IFNULL(값, 값이 NULL일 경우 반환할 값)
+-- 3. 보너스를 받는 사원들의 사번, 사원명, 보너스, 부서명 조회(employee, department)
+SELECT * FROM employee; -- emp_id, emp_name, bonus, dept_code
+SELECT * FROM department; -- dept_id, dept_title
 
-*/
-SELECT emp_name, coalesce(bonus, 0)
-FROM employee;
-
--- 전 사원의 직원며으 보너스, 보너스 포함 연봉 (급여 + 급여 * 보너스) * 12 조회
-SELECT emp_name, bonus, (salary + salary * ifnull(bonus, 0)) * 12
-FROM employee;
-
--- 직원명, 부서코드(dept_code) 조회 (부서코드가 없으면 '부서없음')
-SELECT emp_name, ifnull(dept_code, '부서없음')
-FROM employee;
-
-/*
-	NULLIF(값1, 값2)
-    - 두 개의 값이 동일하면 null 반환, 두 개의 값이 동일하지 않으면 값1 반환
-*/
-SELECT nullif('123', '123'), nullif('123', '456'); -- null, 123
-
-/*
-	IF(값1, 값2, 값3) | IF(조건, 조건이 True인 경우, 조건이 False인 경우)
-    - 값1이 null이 아니면 값2 반환, null이면 값3 반환
-    - 조건에 해당하면 두번쨰 값 반환, 해당하지 않으면 마지막 값 반환
-*/
-SELECT emp_name, bonus, if(bonus, 0.7, 0.1)
-FROM employee;
-
--- 직원명, 부서 코드가 있으면 '부서있음', 없으면 '부서없음' 조회
-SELECT 
-	emp_name, dept_code,
-    -- if(dept_code is not null, '부서있음', '부서없음')
-	if(dept_code is null, '부서없음', '부서있음')
-FROM employee;
-
--- 사번, 사원명 주민번호(emp_no), 성별(남, 여) - emp_no 활용해서 조회
-SELECT 
-	emp_id, emp_name, emp_no,
-    if(substr(emp_no,8, 1) =1, '남', '여') 성별
-FROM employee;
-
--- 사원명으 직급코드(job_code), 기존급여(salary), 인상된 급여 조회
--- 정렬 : 직급코드 J1부터, 인상된 급여 높은 순서대로
--- 직급코드가 J7인 사원은 급여를 10% 인상
--- 직급코드가 J6인 사원은 급여를 15% 인상
--- 직급코드가 J5인 사원은 급여를 20% 인상
--- 그 외의 직급의 사원은 급여를 5%만 인상
-
-SELECT 
-emp_name, job_code, salary, 
-format(if(job_code = 'J7', salary * 1.1,
-			if(job_code = 'J6', salary * 1.15,
-					if(job_code = 'J5', salary * 1.2, salary * 1.05))), 0) "인상된 급여"
-
+SELECT emp_id, emp_name, bonus, dept_title
 FROM employee
-ORDER BY 2, 4 DESC;
+JOIN department ON (dept_code = dept_id)
+WHERE bonus IS NOT NULL;
+
+-- 4. 부서가 총무부가 아닌 사원들의 사원명, 급여 조회 (employee, department)
+SELECT * FROM employee; -- emp_name, salary, dept_code
+SELECT * FROM department; -- dept_id, dept_title
+
+SELECT 	emp_name, salary
+FROM employee
+JOIN department ON (dept_code = dept_id)
+WHERE dept_title != '총무부';
 
 /*
-	CASE WHEN 조건식 1 THEN 결과값 1
-		 WHEN 조건식 2 THEN 결과값 2
-         ......
-				ELSE 결과값 N
-		
-        END
-        
-        -> if ~ else if ~ else 문과 유사 
+	2. 외부 조인(OUTER JOIN) : MYSQL 은 ANSI 구문만 가능
+    - 두 테이블 간의 JOIN 시 일치하지 않는 행도 포함시켜서 조회가 가능하다.
+    - 단, 반드시 기준이 되는 테이블(컬럼)을 지정해야 한다. (LEFT, RIGHT, FULL)
+
+
+
+*/
+-- 사원명, 부서명, 급여, 연봉(급여 * 12) 조회
+SELECT emp_name, dept_title, salary, salary * 12
+FROM employee
+JOIN department ON (dept_code = dept_id);
+
+-- > 부서 배치가 안된 사원 2명에 대한 정보 조회 x
+-- > 부서에 배정된 사원이 없는 부서도 정보 조회 x
+
+-- 1) LEFT JOIN : 두 테이블 중 왼쪽에 기술된 테이블을 기준으로 JOIN
+SELECT emp_name, dept_title, salary, salary * 12
+FROM employee
+RIGHT JOIN department ON (dept_code = dept_id);
+
+-- 2) RIGHT JOIN : 두 테이블 중 오른쪽에 기술된 테이블을 기준으로 JOIN
+SELECT emp_name, dept_title, salary, salary * 12
+FROM employee
+RIGHT JOIN department ON (dept_code = dept_id);
+
+-- 3) FULL JOIN : 두 테이블이 가진 모든 행을 조회할 수 있음 - MY SQL X
+
+/*
+	3. 비등가 조인 (NON EQUAL JOIN)
+    - 매칭시킬 컬럼에 대한 조건 작성시 '='(등호)를 사용하지 않는 조인문
+    - 값의 범위에 포함되는 행들을 연결하는 방식 
+    - ANSI 구문으로는 JOIN ON 만 사용 가능!(USING 사용 불가)
+
 
 */
 
-SELECT 
-		emp_name, job_code, salary,
-        format(case when job_code = 'J7' then salary * 1.1
-					when job_code = 'J6' then salary * 1.15
-                    when job_code = 'J5' then salary * 1.2
-                    else salray * 1.05
-                    end, 0) "인상된 급여"
-		FROM employee
-        ORDER BY 2, 4 DESC;
+SELECT * FROM employee; -- emp_name, salary
+SELECT * FROM sal_grade; -- 급여 등급 테이블 : sal_level, min_sal, max- sal -> salary와 연관!
 
+-- 사원며으 급여, 급여 레벨 조회
+SELECT emp_name, salary, sal_level
+FROM sal_grade
+JOIN employee ON (min_sal <= salary AND salary <= max_sal);
 
--- 사원명, 급여, 급여 등급(1 ~ 4등급) 조회
--- salary 값이 500 만원 초과일 경우 1등급
--- salary 값이 500 만원 이하 350 만원 초과일 경우 2 등급
--- salary 값이 350만원 이하 200만원 초과일 경우 3 등급
--- 그외의 경우 4등급
+/*
+	4. 자체 조인(SELF JOIN)
+    - 같은 테이블을 다시 한번 조인하는 경우 (자기 자신과 조인)
+
+*/
+SELECT * FROM employee;
+
+-- 전체 사원의 사원사번(emp_id), 사원명(emp_name), 사원부서코드(dept_code), 사수사번(manager_id)
+-- 사수사번(emp_id), 사수명(emp_name), 사수부서코드(dept_code) 조회
+
 SELECT
-emp_name, salary, case when salary > 500000 then '1등급'
-					   when salary > 3500000 then '2등급'
-                       when salary > 2000000 then '3등급'
-                       else '4등급'
-					   end 급여등급
+	e.emp_id "사원사번", e.emp_name "사원명",
+    e.dept_code "사원부서코드", e.manager_id "사수사번",
+    m.emp_id "사수사번", m.emp_name "사수명",
+    m.dept_code "사수부서코드"
+FROM employee e
+LEFT JOIN employee m ON (m.emp_id = e.manager_id);
 
-FROM employee;
+/*
+	카테시안곱(CARTESIAN PRODUCT) / 교차 조인 (CROSS JOIN)
+    - 조인되는 모든 테이블의 각 행들이 서로서로 모두 매핑된 데이터가 검색된다. (곱집합)
+    - 두 테이블의 행들이 모두 곱해진 행들의 조합이 출력 -> 방대한 데이터 출력 -> 과부하 위험 
+*/
+
+-- 사원명, 부서명 조회(employee - emp_name, department - dept_title)
+-- >> where 구문
+SELECT emp_name, dept_title
+FROM employee, department;
+
+-- >> ANSI 구문
+SELECT emp_name, dept_title
+FROM employee CROSS JOIN department;
+
+/*
+		6. 다중 JOIN
+        - 여러 개의 테이블을 조인하는 경우
+
+*/
+-- 사번, 사원명, 부서명, 직급명, 조회
+SELECT * FROM employee; -- emp_id, emp_name, dept_code, job_code <-- foreign key (외래키)
+SELECT * FROM department; -- dept_title, dept_id 				 < -- primary key(주요키)
+SELECT * FROM job; -- job_name, job_code						 < -- primary key(주요키)
+
+SELECT emp_id, emp_name, dept_title, job_name
+FROM employee
+JOIN department ON (dept_code = dept_id)
+JOIN job USING (job_code);
+
+-- 실습문제 --
+-- 1. 직급이 대리면서 ASIA 지역에서 근무하는 직원들의 사번, 직원명, 직급명, 부서명, 근무지역, 급여 조회
+SELECT * FROM employee; -- emp_id, emp_name, job_code, dept_code, salary 
+SELECT * FROM job; -- job_code, job_name
+SELECT * FROM department; -- dept_id, dept_title, location_id
+SELECT * FROM location; -- local_code, local_name
+
+SELECT emp_id, emp_name, job_name, dept_title, local_name, salary
+FROM employee
+JOIN job USING(job_code)
+JOIN department ON (dept_code = dept_id)
+JOIN location ON (location_id = local_code)
+WHERE job_name = '대리' AND local_name LIKE 'ASIA%';
+
+-- 2. 70년대생 이면서 여자이고, 성이 전 씨인 직원들의 직원명, 주민번호, 부서명, 직급명 조회
+SELECT * FROM employee; -- emp_name, emp_no, dept_code, job_code
+SELECT * FROM job; -- job_code, job_name
+SELECT * FROM department; -- dept_id, dept_title
+
+SELECT emp_name, emp_no, dept_title, job_name
+FROM employee
+JOIN job USING(job_code)
+JOIN department ON (dept_code = dept_id)
+WHERE emp_no LIKE '7____-2%' AND emp_name LIKE '전%';
+
+-- 3. 보너스를 받은 직원들의 직원명, 보너스, 연봉, 부서명, 근무지역 조회
+-- 부서가 없는 직원들도 나타내고 싶다면 LEFT JOIN (employee 테이블이 왼쪽에 있을 떄)
+SELECT * FROM employee; -- emp_name, bonus, salary, dept_code
+SELECT * FROM department; -- dept_id, dept_title, location_id
+SELECT * FROM location; -- local_code, local_name
+
+SELECT emp_name, bonus, format((salary + salary * bonus)*12, 0) 연봉, dept_title, local_name
+FROM employee
+LEFT JOIN department ON (dept_code = dept_id)
+LEFT JOIN location ON (location_id = local_code)
+WHERE bonus is not null;
+
+-- 4. 한국과 일본에서 근무하는 직원들의 직원명, 부서명, 근무지역, 근무국가 조회 
+SELECT * FROM employee; -- emp_name, dept_code
+SELECT * FROM department; -- dept_id, dept_title, location_id
+SELECT * FROM location; -- local_code, local_name, national_code
+SELECT * FROM national; -- national_code, national_name
+
+SELECT emp_name, dept_title, local_name, national_name
+FROM employee
+JOIN department ON (dept_code = dept_id)
+JOIN location ON (location_id = local_code)
+JOIN national USING (national_code)
+WHERE national_name IN ('한국', '일본');
+
+-- 5. 각 부서별 평균 급여를 조회하여 부서명, 평균 급여 조회 
+SELECT * FROM employee; -- dept_code, salary
+SELECT * FROM department; -- dept_id, dept_title
+
+SELECT dept_title, avg(salary)
+FROM employee
+JOIN department ON (dept_code = dept_id)
+GROUP BY dept_title;
+
+-- 6. 각 부서별 총 급여의 합이 1000만원 이상인 부서명, 급여 합 조회
+SELECT * FROM employee; -- dept_code, salary
+SELECT * FROM department; -- dept_id, dept_title
+
+SELECT dept_title, sum(salary)
+FROM employee
+JOIN department ON (dept_code = dept_id)
+GROUP BY dept_title
+HAVING sum(salary) >= 10000000;
+
+-- 8. 보너스를 받지 않은 직원들 중 직급 코드가 J4 또는 J7인 직원들의 직원명, 직급명, 급여 조회
+SELECT * FROM employee; -- emp_name, job_code, salary, bonus
+SELECT * FROM job; -- job_code, job_name
+
+SELECT emp_name, job_name, salary
+FROM employee
+JOIN job USING (job_code)
+WHERE bonus IS NULL AND job_code IN ('J4', 'J7');
+
+-- 9. 부서가 있는 직원들의 직원명, 직급명, 부서명, 근무지역 조회
+-- INNER JOIN을 하는 경우 NULL이 포함되어 있는 것처럼 일치하는 걸 못찾는다면 제외
+SELECT * FROM employee; -- emp_name, job_code, dept_code
+SELECT * FROM job; -- job_code, job_name
+SELECT * FROM department; -- dept_id, dept_title, location_id
+SELECT * FROM location; -- local_code, local_name
+
+SELECT emp_name, job_name, dept_title, local_name
+FROM employee
+JOIN job USING (job_code)
+JOIN department ON (dept_code = dept_id)
+JOIN location ON (location_id = local_code);
+
+-- 10. 해외 영업팀에 근무하는 직원들의 직원명, 직급명, 부서코드, 부서명 조회
+SELECT * FROM employee; -- emp_name, dept_code, job_code
+SELECT * FROM job; -- job_code, job_name
+SELECT * FROM department; -- dept_id, dept_title
+
+SELECT emp_name, job_name, dept_code, dept_title
+FROM employee
+JOIN job USING (job_code)
+JOIN department ON (dept_code = dept_id)
+WHERE dept_title LIKE '해외영업%';
+
+-- 11. 이름에 '형' 자가 들어있는 직원들의 사번, 직원명, 직급명 조회
+SELECT * FROM employee; -- emp_id, emp_name, job_code
+SELECT * FROM job; -- job_code, job_name
+
+SELECT emp_id, emp_name, job_name
+FROM employee
+JOIN job USING (job_code)
+WHERE emp_name LIKE '%형%';
+
+-- 12. 사번, 사원명, 부서명, 직급명, 국가명, 급여등급 조회
+-- 참고로 employee, job, department, location, national, sal_grade
+SELECT * FROM employee; -- emp_id, emp_name, dept_code, job_code
+SELECT * FROM department; -- dept_id, dept_title, location_id
+SELECT * FROM job; -- job_code, job_name
+SELECT * FROM location; -- local_code, local_name, national_code
+SELECT * FROM sal_grade; -- sal_level, min_sal, max_sal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
