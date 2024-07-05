@@ -1,4 +1,4 @@
-package com.kh;
+package com.kh.operator;
 
 import java.util.Scanner;
 
@@ -9,12 +9,12 @@ public class D_Comparison {
 		
 		/*
 		 * 비교 연산자
-		 * a < b : a가 b보다 작은가? 
-		 * a > b : a가 b보다 큰가?
-		 * a <= b : a가 b보다 작거나 같은가?
-		 * a >= b : a가 b보다 크거나 같은가?
-		 * a == b : a와 b가 같은가?
-		 * a != b : a와 b가 같지 않은가?
+		 * a < b : a 가 b 보다 작은가? 
+		 * a > b : a 가 b 보다 큰가?
+		 * a <= b : a 가 b 보다 작거나 같은가?
+		 * a >= b : a 가 b 보다 크거나 같은가?
+		 * a == b : a 와 b 가 같은가?
+		 * a != b : a 와 b 가 같지 않은가?
 		 * 
 		 * - 비교 연산의 조건을 만족하면 true, 만족하지 않으면 false 
 		 * */

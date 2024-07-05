@@ -145,7 +145,7 @@ public class A_Variable {
 		
 		final int MAX_AGE = 30;
 //		AGE = 35; 에러 발생
-		System.out.println(AGE);
+		System.out.println(age);
 		
 		
 	   }

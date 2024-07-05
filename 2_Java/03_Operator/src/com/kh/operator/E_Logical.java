@@ -1,4 +1,4 @@
-package com.kh;
+package com.kh.operator;
 
 import java.util.Scanner;
 
@@ -9,8 +9,8 @@ public class E_Logical {
 	 *  - 두 개의 논리값을 연산해주는 연산자 
 	 *  - 논리연산한 결과마저 논리값 
 	 *  
-	 * 논리값 && 논리값 (and) : 왼쪽, 오른쪽 둘 다 true일 경우만 결과값이 true
-	 * 논리값 || 논리값 (or) : 왼쪽, 오른쪽 둘 중에 하나라도 true일 경우 결과값이 true
+	 * 논리값 && 논리값 (and) : 왼쪽, 오른쪽 둘 다 true 일 경우만 결과값이 true
+	 * 논리값 || 논리값 (or) : 왼쪽, 오른쪽 둘 중에 하나라도 true 일 경우 결과값이 true
 	 *  
 	 *  
 	 * 

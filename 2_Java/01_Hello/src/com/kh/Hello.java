@@ -29,6 +29,47 @@
  *     이름 없는 패키지(default)에 속하게 된다.   
  * */
 
+
+
+
+
+
+
+
+
+
+/*
+ * 
+ * * 자바의 특징
+ *   - 객체지향 프로그래밍(Object-Oriented Programming, OOP)언어다.
+ *   - 자동으로 메모리를 관리한다. (Garbage Collection)
+ *   - 운영체제에 독립적이다.(JVM)
+ *   - 네트워크와 분산처리를 지원한다. (Java API)
+ *   - 멀티 스레드를 지원한다. (Java API)
+ *   - 동적 로딩을 지원한다.
+ *   
+ * * JDK > JRE > JVM
+ *   - JDK(Java Development Kit) : 자바 개발 도구
+ *   	 = JRE + 실행파일(bin/javac.exe, java.exe 등)
+ *   
+ *   - JRE(Java Runtime Environment) : 자바 실행 환경
+ *       = JVM + Java API(lib/src.zip)
+ *       
+ *   - JVM(Java Virtual Machine) : 자바 가상 머신 
+ *   
+ * * 자바 프로그램 실행 단계
+ *   - 확장자가 .java인 소스파일을 작성한다.
+ *   - 작성된 소스파일을 자바 컴파일러(javac.exe)로 컴파일하여
+ *   	확장자가 .class인 바이트코드(기계어)로 번역한다.
+ *   - 번역된 바이트코드(기계어)를 JVM의 자바 인터프리터(java.exe)를 이용해 실행한다.
+ *   
+ * * 패키지(package)
+ *   - 폴더를 만들어서 파일을 저장하고 관리하듯이 패키지를 만들어 클래스를 저장하고 관리한다.
+ *   - 패키지는 클래스를 유일하게 만들어주는 식별자 역할을 한다.
+ *   - 모든 클래스는 하나의 패키지에 속하며, 패키지가 선언되지 않는 클래스는 자동적으로
+ *     이름 없는 패키지(default)에 속하게 된다.   
+ * */
+
 package com.kh;
 
 

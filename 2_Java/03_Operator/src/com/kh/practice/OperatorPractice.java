@@ -10,7 +10,7 @@ public class OperatorPractice {
 	//1인당 동일하게 나눠가진 연필 개수와 나눠주고 남은 연필의 개수를 출력하세요.
 	public void method1() {
 		System.out.println("인원수 >> ");
-		int penceil 
+		int penceil;
 	}
 	
 	//입력 받은 숫자를 산술 연산자만 사용해서 십의 자리 이하는 버리는 코드를 작성하세요.

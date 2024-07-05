@@ -1,4 +1,4 @@
-package com.kh;
+package com.kh.operator;
 
 import java.util.Scanner;
 
@@ -13,8 +13,8 @@ public class F_Triple {
 	 * 조건식 ? 값1 : 값2;
 	 * 
 	 * - 조건식에는 주로 비교, 논리 연산자가 사용된다.
-	 * - 조건식의 결과가 true이면 값1을 반환한다.
-	 * - 조건식의 결과가 false이면 값2를 반환한다.
+	 * - 조건식의 결과가 true 이면 값1을 반환한다.
+	 * - 조건식의 결과가 false 이면 값2를 반환한다.
 	 * */
 	
 	
