@@ -64,6 +64,9 @@ public class A_HashSet {
 		while(it.hasNext()) { // 읽어올 요소가 있는지 확인
 			System.out.println(it.next()); // 다음 요소를 읽어옴
 		}
+		
+		
+		
 	}		
 	
 	

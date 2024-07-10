@@ -141,7 +141,24 @@ public void method4() {
  * */
 	
 public void practice1() {
-	System.out.println();
+	System.out.println("점수 입력(0~100점) : ");
+	int score = sc.nextInt();
+	
+	String result = "";
+	
+	if(score >= 90) {
+			result = "A";
+	} else if(score >= 80) {
+		result = "B";
+	} else if(score >= 70) {
+		result = "C";
+	} else if(score >= 60) {
+		result = "D";
+	} else {
+			result = "F";
+	}
+	
+	System.out.println(result);
 }	
 
 
@@ -152,7 +169,8 @@ public void practice1() {
 //		a.method1();
 //		a.method2();
 //		a.method3();
-		a.method4();
+//		a.method4();
+		a.practice1();
 		
 		
 	}
