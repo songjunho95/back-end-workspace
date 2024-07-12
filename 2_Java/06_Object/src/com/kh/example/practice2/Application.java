@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.kh.example.practice2.controller.SnackController;
 
 public class Application {
-
+	
 	public static void main(String[] args) {
 		// ------------------ 화면 ---------------------
 		Scanner sc = new Scanner(System.in);
