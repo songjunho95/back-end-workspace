@@ -1,5 +1,7 @@
 package com.kh.step2;
 
+import java.io.BufferedWriter;
+
 import com.kh.step2.model.Card;
 
 public class Application {
@@ -32,6 +34,42 @@ public class Application {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * BufferredReader, BufferedWriter
+	 * 		: 입출력 효율을 높이기 위해(char[])를 사용하는 보조 스트림
+	 * 		--> 라인 (line) 단위로 입출력이 편리하다
+	 * 
+	 * PringWriter : 프린터와 유사하게 출력하는
+	 * 				 print(), println() 메서드를 가지고 있는 보조스트림
+	 * 
+	 * 
+	 * */
+		try(FileReader fr = new File Reader(fileName)
+				 		BufferredReader br = new BufferedReader(fr);) {
+						PrintWriter pw = new PrintWriter(new FileWriter(outfilenName));
+		}
+						FileWriter fw = new FileWriter(outfileName, true);
+						
+//						BufferedWriter bw = new BufferedWriter(fw);)
+{
+			
+			String line = "";
+			while((line = br.readLine()) != null) {
+//				System.out.println(line);
+				bw.write(line);
+				bw.newLine(); // 라인 구문자(개행문자)를 출력
+				pw.println(line);
+			}
+			
+		}
 	
 	
 	
