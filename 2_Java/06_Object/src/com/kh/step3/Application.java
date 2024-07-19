@@ -10,9 +10,17 @@ public class Application {
 		 * 변수 호출 방법
 		 * - 참조변수.변수;
 		 * 
-		 * 메서드 호출 방법
-		 * - 참조변수.메서드명();  // 매개변수가 없는 경우
-		 * - 참조변수.메서드명(값1, 값2, ....); // 매개변수가 있는 경우
+		 * 
+		 * 메서드 호출방법
+		 * - 참조변수.메서드명(); // 매개변수가 없는 경우
+		 * - 참조변수.메서드명(값1, 값2, ...); // 매개변수가 있는 경우
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
 		 * */
 		Calculator c = new Calculator();
 		
@@ -25,12 +33,11 @@ public class Application {
 		System.out.println("나누기 : " + Calculator.divide(c.b, c.a));
 		
 		System.out.println("팩토리얼 : " + c.factorial(5));
-		System.out.println("팩토리얼 : " + c.factorial2(5));
-		
-		
-		
+		System.out.println("팩토리얼 : " + c.factorial(5));
 		
 		
 	}
+	
+	
 	
 }
