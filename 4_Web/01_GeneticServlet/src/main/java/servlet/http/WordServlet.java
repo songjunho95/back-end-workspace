@@ -26,7 +26,7 @@ public class WordServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.println("<html><body>");
 		out.println("<h1>Client Send Data : " + keyword + "</h1>");
-		out.print);
+		out.println();
 		
 		
 	}
