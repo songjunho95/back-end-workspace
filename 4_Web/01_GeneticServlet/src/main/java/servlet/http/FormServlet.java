@@ -31,7 +31,7 @@ public class FormServlet extends HttpServlet {
 //			System.out.println(gender);
 //			System.out.println(Arrays.toString(menuList));
 			
-//			form으로 해당 요청 값 받아서 응답 결과 출력
+//			form 으로 해당 요청 값 받아서 응답 결과 출력
 			PrintWriter pw = response.getWriter();
 			pw.println("<html><body>");
 			pw.println("<p>당신의 아이디는 " + id + "</p>");

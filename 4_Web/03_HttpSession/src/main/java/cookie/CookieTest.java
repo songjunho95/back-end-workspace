@@ -31,6 +31,10 @@ public class CookieTest extends HttpServlet {
 			
 			// 네비게이션
 			response.sendRedirect("product");
+			
+			
+			
+			
 	}
 
 }
