@@ -12,10 +12,9 @@ import com.kh.model.dao.MemberDAO;
 import com.kh.model.vo.Member;
 
 @WebServlet("/search")
-
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-     
+
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. 폼 값 받는다
 		String id = request.getParameter("id");
@@ -32,11 +31,14 @@ public class SearchServlet extends HttpServlet {
 		// 3. 바인딩
 		request.setAttribute("info", member);
 		
-		// 4. 네이비게이션
+		// 4. 네비게이션
 		request.getRequestDispatcher("search.jsp").forward(request, response);
-		
-		
-		
-		
 	}
+
+	
+	
+	
+	
+	
+	
 }

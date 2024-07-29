@@ -76,7 +76,7 @@ public class MemberDAO {
 		
 		close(rs, ps, conn);
 		
-		return member List;
+		return memberList;
 		
 	}
 	

@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 @WebServlet("/word")
 public class WordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// 인코딩! -> 한글 처리
@@ -26,10 +26,9 @@ public class WordServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.println("<html><body>");
 		out.println("<h1>Client Send Data : " + keyword + "</h1>");
-		out.println();
+		out.println("</body></html>");
 		
-		
+		out.close();
 	}
-	
-}
 
+}

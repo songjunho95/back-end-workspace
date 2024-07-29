@@ -11,12 +11,11 @@ import java.util.List;
 import model.vo.Member;
 
 public class MemberDAO {
-		
+
 	public MemberDAO() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -28,16 +27,14 @@ public class MemberDAO {
 	public void close(PreparedStatement ps, Connection conn) throws SQLException {
 		ps.close();
 		conn.close();
-		
 	}
 	
 	public void close(ResultSet rs, PreparedStatement ps, Connection conn) throws SQLException {
-		
 		rs.close();
 		close(ps, conn);
 	}
 	
-	// DAO 개발할 때 중요한 건 
+	// DAO 개발할 때 중요한 건
 	// 매개변수(파라미터) 뭘 가지고 와야 되는지, 리턴타입 결과 출력이 어떤게 필요한지
 	
 	// 회원가입
@@ -55,8 +52,50 @@ public class MemberDAO {
 		close(ps, conn);
 	}
 	
-	// 회원 검색
+	// 로그인
+	public Member login(String id, String password) throws SQLException {
+		Connection conn = connect();
+		
+		String query = "SELECT * FROM member WHERE id = ? AND password = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		
+		ps.setString(1, id);
+		ps.setString(2, password);
+		
+		ResultSet rs = ps.executeQuery();
+		Member member = null;
+		
+		if(rs.next()) {
+			member = new Member(id, password, rs.getString("name"));
+		}
+		
+		close(rs, ps, conn);
+		
+		return member;
+	}
 	
+	// 회원검색
+	public Member search(String id) throws SQLException {
+		Connection conn = connect();
+		
+		String query = "SELECT * FROM member WHERE id = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		
+		ps.setString(1, id);
+		
+		ResultSet rs = ps.executeQuery();
+		Member member = null;
+		
+		if(rs.next()) {
+			member = new Member(id, rs.getString("password"), rs.getString("name"));
+		}
+		
+		close(rs, ps, conn);
+		
+		return member;
+	}
+	
+	// 전체회원보기
 	public List<Member> all() throws SQLException {
 		Connection conn = connect();
 		
@@ -67,22 +106,13 @@ public class MemberDAO {
 		List<Member> memberList = new ArrayList<>();
 		
 		while(rs.next()) {
-			memberList.add(new Member(rs.getString("id"),
-										rs.getString("password"),
+			memberList.add(new Member(rs.getString("id"), 
+										rs.getString("password"), 
 										rs.getString("name")));
-				
-			
 		}
 		
 		close(rs, ps, conn);
 		
-		return member List;
-		
-	}
-	
-	
-	
-	
-	
-	
+		return memberList;
+	}	
 }

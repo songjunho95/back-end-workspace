@@ -13,10 +13,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/allMember")
-public class AllMember extends HttpServlet {
+public class AllMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-
+       
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MemberDAO dao = new MemberDAO();
 		try {
@@ -24,16 +23,9 @@ public class AllMember extends HttpServlet {
 			
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("/views/allMember.jsp").forward(request, response);
-			
-			
-			
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
-		
 	}
 
 }
