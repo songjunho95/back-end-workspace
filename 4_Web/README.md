@@ -51,6 +51,6 @@
 ```java
 @WebServlet("접근 URL 패턴")
 public class 서블릿이름 extends HttpServlet {
-
+    
 }
 ```
