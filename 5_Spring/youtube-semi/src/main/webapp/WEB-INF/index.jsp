@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
+    
+  
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,7 +15,10 @@
     />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-    <script  src="https://kit.fontawesome.com/ef885bd654.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/ef885bd654.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <header>
@@ -116,14 +115,14 @@
           <a href="">라이브</a>
           <a href="">야생생물</a>
         </nav>
-        <section></section>
+        <section>
+        	<c:forEach items="${list}" var="video">
+        		${video}
+        	</c:forEach>
+        
+        </section>
       </div>
     </main>
   </body>
 </html>
-
-
-
-
-</body>
-</html>
+    

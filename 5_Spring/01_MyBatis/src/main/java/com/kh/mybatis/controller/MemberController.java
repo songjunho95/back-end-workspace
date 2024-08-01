@@ -77,6 +77,10 @@ public class MemberController {
 			session.setAttribute("vo", vo);
 			
 	
+	@PostMapping("/delete")
+	public String delete(@RequestParam(name="idList", required=false) List<String>)
+			if(idList!=null)
+			
 	
 		return "redirect:/";
 		

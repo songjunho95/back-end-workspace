@@ -12,13 +12,18 @@ public class DBConnectionTest2 {
 	public static final String USER = "root";
 	public static final String PASSWORD = "qwer1234";
 	
+	
+	
+	
 	public static void main(String[] args) {
 		
+		
 		try {
+			
 			// 1. 드라이버 로딩
 			Class.forName(DRIVER_NAME);
 			
-			// 2. 데이터베이스 연결
+			// 2. 데이터베이스 연결 
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			
 			// 3. PreparedStatement - INSERT
@@ -27,15 +32,18 @@ public class DBConnectionTest2 {
 			
 			ps.setInt(1, 900);
 			ps.setString(2, "김미경");
-			ps.setString(3, "111111-1111111");
+			ps.setString(3, "11111-11111");
 			
-			// 4. 쿼리문 실행 
+			// 4.쿼리문 실행
 			System.out.println(ps.executeUpdate() + "명 추가!");
 			
-			
 		} catch (ClassNotFoundException | SQLException e) {
+			
 			e.printStackTrace();
 		}
 		
+		
 	}
+	
+	
 }

@@ -11,12 +11,14 @@ public class DBConnetionTest1 {
 
 	public static void main(String[] args) {
 		
-		// JDBC(Java Database Connectivity) 작업 4단계
+//		JDBC(Java Database Connectivity) 작업 4단계
+		
 		
 		try {
+			
 			// 1. 드라이버 로딩
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("1. 드라이버 로딩...!");
+			System.out.println("1. 드라이버 로딩 ...!");
 			
 			// 2. 데이터베이스와 연결
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kh", "root", "qwer1234");
@@ -29,6 +31,7 @@ public class DBConnetionTest1 {
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
+				
 				String empId = rs.getString("emp_id");
 				String empName = rs.getString("emp_name");
 				int salary = rs.getInt("salary");
@@ -36,16 +39,21 @@ public class DBConnetionTest1 {
 				Date hireDate = rs.getDate("hire_date");
 				char entYn = rs.getString("ent_yn").charAt(0);
 				
-				System.out.println(empId + " / " + empName + " / " + salary + " / "
-									+ bonus + " / " + hireDate + " / " + entYn);
+				System.out.println(empId + " / " + empName + " / " + salary + " / " 
+														+ bonus + " / " + hireDate + " / " + entYn);
+				
+				
+				
 			}
+			
+		
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
-
-
-			
-			
-	}
+	
+	
+}
+	
