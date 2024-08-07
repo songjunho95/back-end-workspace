@@ -2,7 +2,7 @@ package com.kh.condition;
 
 import java.util.Scanner;
 
-public class A_If {
+public class A_if {
 
 	
 	Scanner sc = new Scanner(System.in);
@@ -165,7 +165,7 @@ public void practice1() {
 
 	
 	public static void main(String[] args) {
-		A_If a = new A_If();
+		A_if a = new A_if();
 //		a.method1();
 //		a.method2();
 //		a.method3();

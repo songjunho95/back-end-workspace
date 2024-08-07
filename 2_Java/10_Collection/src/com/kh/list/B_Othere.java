@@ -8,18 +8,14 @@ import java.util.Vector;
 public class B_Othere {
 	
 	/*
-	 *
 	 * Vector
-	 * - 동기화된(syncjronized) 메서드로 구성 (갠녀ㅁ은 스레드에서~)
-	 * 
-	 * 
-	 * 
+	 * - 동기화된(synchronized) 메서드로 구성 (개념은 스레드에서~)
 	 * 
 	 * 
 	 * */
-
-	public void method() {
-		Vector<E> v = new Vector;
+	
+	public void method1() {
+		Vector v = new Vector();
 		v.add(0);
 		v.add(1);
 		v.add(2);
@@ -31,39 +27,37 @@ public class B_Othere {
 		v.add(8);
 		v.add(9);
 		v.add(10);
-		v.add(11);
-		v.add(12);
-		v.add(13);
-		v.add(14);
-		v.add();
 		System.out.println(v);
-		System.out.println("size : " + v.size());
-		System.out.println("capacity : " +  v.caapcity);
-}
+		System.out.println("size : " + v.size()); // 3
+		System.out.println("capacity : " + v.capacity()); // 10
 		
-//	 스택(Stack : 마지막에 저장한 것을 제일 먼저 꺼내는 LIFO(Last In First Out))
-		public void method2() {
-			Stack s = new Stack();
-			s.push(0);
-			s.push(1);
-			s.push(2);
-			s.pop();
-			s.push(4);
-			s.push(s);
-			s.push(6);
-			s.push(6);
-			s.pop();
-			System.out.println(s);  // 0, 1, 2, 5, 6;
-		}
+		v.trimToSize();
 		
+		System.out.println("size : " + v.size()); // 3
+		System.out.println("capacity : " + v.capacity()); // 10
 		
-		
-//	 큐(Queue) : 처음에 저장한 것을 제일 먼저 꺼내는 FIFO(First In First Out)
-		
+	}
+	
+	// 스택(Stack) : 마지막에 저장한 것을 제일 먼저 꺼내는 LIFO(Last In First Out) 구조
+	public void method2() {
+		Stack s = new Stack();
+		s.push(0);
+		s.push(1);
+		s.push(2);
+		s.push(3);
+		s.pop();
+		s.push(5);
+		s.push(6);
+		s.push(7);
+		s.pop();
+		System.out.println(s); // 0, 1, 2, 5, 6
+	}
+	
+	
+	// 큐(Queue) : 처음에 저장한 것을 제일 먼저 꺼내는 FIFO(First In First Out) 구조
 	public void method3() {
 		
-		// 큐는 인터페이스 
-	
+		// 큐는 인터페이스
 		Queue q = new LinkedList();
 		
 		q.offer(0);
@@ -71,18 +65,41 @@ public class B_Othere {
 		q.offer(2);
 		q.offer(3);
 		q.poll();
+		q.add(4);
+		q.remove();
 		q.add(5);
 		q.add(6);
 		q.add(7);
 		q.remove();
-		System.out.println(q);
-		
-		
+		System.out.println(q); // 3, 4, 5, 6, 7
 	}
-
+	
+	
 	public static void main(String[] args) {
+		B_Othere b = new B_Othere();
 		
-	B_Other b = new B_Other;
+//		b.method1();
+//		b.method2();
+		b.method3();
 
-}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

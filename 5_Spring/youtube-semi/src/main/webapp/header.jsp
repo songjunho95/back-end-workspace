@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
-    
-  
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>YouTube</title>
@@ -21,7 +23,6 @@
     ></script>
   </head>
   <body>
-  	<jsp:include page="header.jsp" />
     <header>
       <div class="header-start">
         <i class="fa-solid fa-bars"></i>
@@ -96,38 +97,5 @@
         </button>
       </div>
     </header>
-    <main>
-      <aside>
-        <a href="">
-          <i class="fa-solid fa-house"></i>
-          <span>홈</span>
-        </a>
-        <a href="">
-          <i class="fa-solid fa-folder"></i>
-          <span>구독</span>
-        </a>
-      </aside>
-      <div class="main-content">
-        <nav>
-          <a href="" class="active">전체</a>
-          <a href="">음악</a>
-          <a href="">게임</a>
-          <a href="">뉴스</a>
-          <a href="">라이브</a>
-          <a href="">야생생물</a>
-        </nav>
-        <section>
-        	<c:forEach items="${list}" var="video">
-        		${video}
-        	</c:forEach>
-        
-        </section>
-      </div>
-    </main>
-    <script src"${page}"></script>
-    
-    
-    
-  </body>
+</body>
 </html>
-    

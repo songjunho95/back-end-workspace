@@ -15,16 +15,12 @@ public class MemberDAO {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
 	}
 	
 	public Connection connect() throws SQLException {
 		return DriverManager.getConnection("jdbc:mysql://localhost:3306/member", "root", "qwer1234");
-		
 	}
 	
 	public void close(PreparedStatement ps, Connection conn) throws SQLException {
@@ -32,19 +28,15 @@ public class MemberDAO {
 		conn.close();
 	}
 	
-	
 	public void close(ResultSet rs, PreparedStatement ps, Connection conn) throws SQLException {
 		rs.close();
-		conn.close();
+		close(ps, conn);
 	}
 	
-	
-	
-	
-	// 회원가입 - member 스키마의 member 테이블 
+	// 회원가입 - member 스키마의 member 테이블
 	public void registerMember(String id, String pwd, String name) throws SQLException {
 		Connection conn = connect();
-
+		
 		String query = "INSERT INTO member VALUES(?, ?, ?)";
 		PreparedStatement ps = conn.prepareStatement(query);
 		
@@ -56,12 +48,9 @@ public class MemberDAO {
 		
 		close(ps, conn);
 		
-		
-		
 	}
 	
-	
-	// 전체회원보기 
+	// 전체 회원 보기
 	public ArrayList<Member> showAllMember() throws SQLException {
 		Connection conn = connect();
 		
@@ -72,19 +61,21 @@ public class MemberDAO {
 		ArrayList<Member> list = new ArrayList<>();
 		
 		while(rs.next()) {
-			list.add(new Member(rs.getString("id"), rs.getString("password"), rs.getString("name")));
+			list.add(new Member(rs.getString("id"), 
+								rs.getString("password"), 
+								rs.getString("name")));
 		}
 		close(rs, ps, conn);
 		return list;
 	}
-
+	
 	public Member searchMember(String id) throws SQLException {
 		Connection conn = connect();
 		
 		String query = "SELECT * FROM member WHERE id = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		
-		ps.setString(1, query);
+		ps.setString(1, id);
 		
 		ResultSet rs = ps.executeQuery();
 		Member member = null;
@@ -92,11 +83,13 @@ public class MemberDAO {
 		
 		close(rs, ps, conn);
 		return member;
-		
-		
 	}
-
+	
 }
+
+
+
+
 
 
 

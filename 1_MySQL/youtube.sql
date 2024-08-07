@@ -39,7 +39,7 @@ CREATE TABLE video(
 CREATE TABLE comment(
 	comment_code INT PRIMARY KEY AUTO_INCREMENT,
     comment_text TEXT,
-    comment_date DATE DEFAULT (current_date),
+    comment_date DATETIME DEFAULT current_TIMESTAMP,
     id VARCHAR(20),
     video_code INT,
     parent_code INT,
@@ -66,7 +66,7 @@ CREATE TABLE video_like(
     FOREIGN KEY (video_code) REFERENCES video(video_code)
 );
 
-INSERT INTO member(id. password, email phone)
+INSERT INTO member(id. password, email, phone)
 VALUES('akmu', '1234', 'akmu@gmaul.com', '010-0000-0000');
 
 SELECT * FROM member;
@@ -74,6 +74,10 @@ SELECT * FROM member;
 
 INSERT INTO channel(channel_img, channel_name, id)
 VALUES('http://192.168.10.51:8082/channel/akmu.jpg', 'AKMU', 'akmu');
+
+INSERT INTO channel(channel_img, channel_name, id)
+VALUES('http://192.168.10.51:8082/channel/dingo.jpg', '딩고뮤직', 'akmu');
+
 
 
 SELECT * FROM channel;
@@ -85,6 +89,14 @@ VALUES('http://192.168.10.51:8082/video/AKMU1.mp4',
         'AKMU - 후라이의 꿈 LIVE CLIP (FESTIVAL ver.)',
         'More about AKMU',
         1);
+        
+ INSERT INTO video(video_url, video_img, video_desc, channel_code)
+VALUES('http://192.168.10.51:8082/video/AKMU1.mp4', 
+		'http://192.168.10.51:8082/thumbnail/akmu.webp',
+        'DAY6(데이식스)의 킬링보이스를 라이브로!',
+        '데이식스의 쇼에 오신 걸 환영합니다!',
+        2);       
+        
         
 SELECT * FROM video
 JOIN channel USING (channel_code);
