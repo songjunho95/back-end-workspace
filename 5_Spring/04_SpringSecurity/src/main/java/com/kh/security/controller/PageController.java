@@ -9,7 +9,6 @@ public class PageController {
 	@GetMapping("/")
 	public String index() {
 		return "index";
-		
 	}
 	
 	@GetMapping("/register")
@@ -20,7 +19,6 @@ public class PageController {
 	@GetMapping("/login")
 	public String login() {
 		return "login";
-		
 	}
 	
 }

@@ -8,11 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("mapper") // MyBatis 매퍼 인터페이스 위치 패키지
 public class Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
 }
-
-
-

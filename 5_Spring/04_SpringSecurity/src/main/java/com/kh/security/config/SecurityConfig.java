@@ -9,29 +9,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
 	// 특정 http 요청에 대한 웹 기반 보안 구성. 인증/인가 및 로그아웃 설정
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http)  throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorize ->
 					authorize
-//					  .requestMatchers("/register").authenticated()
-					.anyRequest().permitAll()
+						//.requestMatchers("/register").permitAll()
+						.anyRequest().permitAll()
 				)
-				
-			
-
-		.formLogin(login -> 
-						login
-						.loginPage("/login")
-						.defaultSuccessUrl("/", true)
-						.permitAll()
-						)
-		.build();
-		
+				.build();
 	}
-
 	
 }

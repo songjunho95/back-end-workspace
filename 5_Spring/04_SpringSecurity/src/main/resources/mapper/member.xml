@@ -3,20 +3,10 @@
 
 	<insert id="register" parameterType="Member">
 		INSERT INTO member VALUES(#{id}, #{password}, #{name}, #{role})
-		
-	
-	
-	
 	</insert>
 
 	<select id="login" parameterType="String" resultType="Member">
 		SELECT * FROM member WHERE id = #{id}
-	
 	</select>
-
-	
-
-
-
 
 </mapper>
