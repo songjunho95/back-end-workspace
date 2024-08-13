@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class Application {
 	
 	
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args)  {
 		
 		
 
@@ -17,7 +17,7 @@ public class Application {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kh", "root", "qwer1234");
 				
-				String query = "SELECT * FROM employee";
+				String query = "SELECT * FROM Employee";
 				PreparedStatement st = conn.prepareStatement(query);
 				
 				ResultSet rs = st.executeQuery();
@@ -28,7 +28,7 @@ public class Application {
 				}
 				
 				
-			} catch (ClassNotFoundException e) {
+			} catch (Exception e) {
 		
 				e.printStackTrace();
 			}

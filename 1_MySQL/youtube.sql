@@ -99,6 +99,8 @@ VALUES('http://192.168.10.51:8082/video/AKMU1.mp4',
         
         
 SELECT * FROM video
+
+SELECT * FROM video WHERE video_code = 2;
 JOIN channel USING (channel_code);
 
 

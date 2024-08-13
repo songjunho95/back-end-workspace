@@ -35,8 +35,8 @@ public class Application {
 			
 			
 		} else if(number == 2) {
-			for(Food food: list) {
-				System.out.println(food);
+			for(int o = 0; o < list.size(); o++) {
+				System.out.println(list.get(o));
 			}
 			
 			

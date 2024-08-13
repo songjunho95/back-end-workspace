@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class VideoLike {
 	
 	private int likeCode;
-	private String id;
+	private String id; // member
 	private int videoCode; // video
 }
