@@ -2,9 +2,9 @@ package com.kh.practice;
 
 import java.util.Scanner;
 
-import com.kh.exception.DuplicateNameException;
-import com.kh.exception.RecordNotFoundException;
 import com.kh.practice.controller.MemberController;
+import com.kh.practice.exception.DuplicateNameException;
+import com.kh.practice.exception.RecordNotFoundException;
 import com.kh.practice.model.Member;
 
 public class Application {
@@ -49,14 +49,10 @@ public class Application {
 			System.out.println("9. 끝내기");
 			System.out.print("메뉴 번호 : ");
 			
-			int select = 0;
-			
 			try {
-				int select1 = Integer.parseInt(sc.nextLine());					
-			} catch(Exception e) {
+				int select = Integer.parseInt(sc.nextLine());
 				
-				
-				switch(select) {
+				switch (select) {
 					case 1:
 						insertMember();
 						break;
@@ -72,8 +68,13 @@ public class Application {
 						break;
 					default:
 						System.out.println("잘못 입력하셨습니다. 다시 입력해주세요");
-				}			
+				}
+
+			} catch(Exception e) {
+				System.out.println("잘못 입력하셨습니다. 다시 입력해주세요");
 			}
+			
+			
 		}
 	}
 	
@@ -106,14 +107,14 @@ public class Application {
 			int age = Integer.parseInt(sc.nextLine());
 			
 			Member m = new Member(id, name, pwd, email, gender, age);
-		
-			Member m = new Member(id, name, pwd, email, gender, age);
-			
-			
+			mc.insertMember(m);
 		} catch(DuplicateNameException e) {
+			//e.printStackTrace();
 			System.out.println(e.getMessage());
 			insertMember();
 		}
+		
+		
 		
 	}
 	
@@ -129,8 +130,9 @@ public class Application {
 	public void updateMember() {
 		System.out.print("수정할 회원의 아이디 : ");
 		String id = sc.nextLine();
+		
 		try {
-			if(mc.checkId(id) == -1) {
+			if(mc.checkUpdateId(id) == -1) {
 				System.out.println("회원 정보가 없습니다.");
 				return;
 			}
@@ -144,33 +146,10 @@ public class Application {
 		} catch(RecordNotFoundException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	/*
 	 * 전체 회원 정보 출력 (반복문 사용)
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 * */
 	public void printAll() {
 		Member[] mArr = mc.printAll();
@@ -179,7 +158,3 @@ public class Application {
 		}
 	}
 }
-
-
-
-

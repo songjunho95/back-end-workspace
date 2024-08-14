@@ -1,4 +1,4 @@
-package com.kh.security.config;
+package com.semi.youtube.config;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

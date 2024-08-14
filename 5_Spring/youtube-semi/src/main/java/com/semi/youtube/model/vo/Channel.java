@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 public class Channel {
 	private int channelCode;
 	private String channelImg;
-	
-	
+	private String channelName;
+	private String id; // member
 }

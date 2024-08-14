@@ -73,12 +73,3 @@ public class MemberController {
 		return mArr;
 	}
 }
-
-
-
-
-
-
-
-
-

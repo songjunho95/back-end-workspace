@@ -26,8 +26,6 @@ public class MemberController {
 		return member.check(id);
 	}
 	
-	// 회원가입
-	
 	// 로그인
 	@PostMapping("/login")
 	public String login(Member vo, HttpServletRequest request) {
@@ -36,34 +34,24 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("vo", result);
 			return "redirect:/";
-			
-			
+		}
+		return "login";
 	}
-	return "login";
-}
 	
 	// 로그아웃
-	
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "redirect:/";
-		
-		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 회원가입
+	@PostMapping("/signup")
+	public String signup(Member vo) {
+		member.signup(vo);
+		return "redirect:/";
+		
+	}
 	
 }
