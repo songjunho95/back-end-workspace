@@ -8,9 +8,6 @@ import com.kh.ajax.model.vo.Member;
 public interface MemberMapper {
 	
 	Member idCheck(String id);
-	void resgister(Member vo);
-	
-	
-	
-	
+	void register(Member vo);
+
 }

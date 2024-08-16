@@ -27,6 +27,11 @@ public class MemberService {
 		vo.setPassword(bcpe.encode(vo.getPassword()));
 		return member.login(vo);
 	}
+
+	public void signup(Member vo) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
