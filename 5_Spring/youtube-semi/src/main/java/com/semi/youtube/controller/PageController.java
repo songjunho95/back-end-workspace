@@ -1,6 +1,8 @@
 package com.semi.youtube.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +43,8 @@ public class PageController {
 		model.addAttribute("list", video.allVideo());
 		model.addAttribute("count", video.count(data.getChannel().getChannelCode()));
 		
-		HttpSession session = request.getSession();
-		Member member = (Member) session.getAttribute("vo");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Member member = (Member) authentication.getPrincipal();
 		VideoLike like = null;
 		Subscribe sub = null;
 		if(member!=null) {

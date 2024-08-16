@@ -1,6 +1,8 @@
 package com.semi.youtube.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,9 +24,9 @@ public class VideoController {
 	@ResponseBody
 	@PostMapping("/like")
 	public void like(HttpServletRequest request, int code) {
-		System.out.println(code);
-		HttpSession session = request.getSession();
-		Member member = (Member) session.getAttribute("vo");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Member member = (Member) authentication.getPrincipal();
+
 		
 		VideoLike data = VideoLike.builder()
 				.id(member.getId())
