@@ -9,6 +9,7 @@
 <title>YouTube</title>
 <link rel="icon"
 	href="https://www.youtube.com/s/desktop/ae4ecf92/img/favicon_144x144.png" />
+
 </head>
 <body>
 	<jsp:include page="header.jsp" />
@@ -25,18 +26,18 @@
 			</nav>
 			<section>
 				<c:forEach items="${list}" var="video">
-					<div class="video-card" data-code="${video.videoCode}">
-						<div class="video-main">
-							<img src="${video.videoImg}" />
-							<video src="${video.videoUrl}" controls></video>
-						</div>
-						<div class="video-info">
-							<img src="${video.channel.channelImg}" />
-							<div class="video-desc">
-								<h2>${video.videoTitle}</h2>
-								<p>${video.channel.channelName}</p>
-								<p class="video-meta" data-video-date="${video.videoDate}">
-									조회수 ${video.videoCount}회ㆍ<span class="video-date"></span>
+					'<div class="video-card" data-code="' + ${video.videoCode} + '">
+						'<div class="video-main">' +
+							'<img src="' + ${video.videoImg} + '" /> +
+							'<video src="' + ${video.videoUrl} + '" controls></video>' + 
+						'</div>' +
+						'<div class="video-info">' +
+							'<img src="' + ${video.channel.channelImg} + '" /> + 
+							'<div class="video-desc">' +
+								'<h2>' + ${video.videoTitle} + '</h2>' +
+								'<p>' + ${video.channel.channelName} + '</p>'
+								'<p class="video-meta" data-video-date="' + ${video.videoDate} + '">
+									'조회수' + ${video.videoCount}회ㆍ<span class="video-date"></span>
 								</p>
 							</div>
 						</div>
@@ -47,5 +48,32 @@
 	</main>
 	<script src="${pageContext.request.contextPath}/js/script.js"></script>
 	<script src="${pageContext.request.contextPath}/js/time.js"></script>
+	<script>
+	window.addEventListener("scroll", () => {
+		consol.log(document.body.offsetHeight); // 전체 웹 페이지 높이
+		consol.log(widow.innerHeight + window.scrollY + 100);
+		consol.log()
+		if(document.body.offsetHeight <= (widow.innerHeight + window.scrollY + 100)) {
+			page++;
+			$.ajax({
+				url: '/list',
+				type: 'GET',
+				data: {page: page},
+				success: function(videos) {
+					let section = $("")
+					$.each(videos, function(index, video){
+						let videoCard
+					
+					
+					section.uptend
+					
+					})
+				}
+			})
+			
+		}
+	});
+	</script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.semi.youtube.model.vo.Member;
 import com.semi.youtube.model.vo.Subscribe;
@@ -29,6 +30,11 @@ public class PageController {
 		System.out.println(video.allVideo());
 		model.addAttribute("list", video.allVideo());
 		return "index";
+	}
+	@ResponseBody
+	@GetMapping("/list")
+	public List<Video> list(Paging paging) {
+		return video.allVideo(paging);
 	}
 	
 	// 비디오 1개 보여주기

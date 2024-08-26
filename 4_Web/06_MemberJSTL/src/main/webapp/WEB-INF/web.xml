@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd" version="5.0">
-  <servlet>
-    <description></description>
-    <display-name>RegisterServlet</display-name>
-    <servlet-name>RegisterServlet</servlet-name>
-    <servlet-class>controller.RegisterServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RegisterServlet</servlet-name>
-    <url-pattern>/RegisterServlet</url-pattern>
-  </servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" version="6.0">
   <display-name>04_MemberLogin</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
@@ -21,6 +11,16 @@
   </welcome-file-list>
   <servlet>
     <description></description>
+    <display-name>LoginServlet</display-name>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>controller.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/LoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>SearchServlet</display-name>
     <servlet-name>SearchServlet</servlet-name>
     <servlet-class>controller.SearchServlet</servlet-class>
@@ -28,26 +28,6 @@
   <servlet-mapping>
     <servlet-name>SearchServlet</servlet-name>
     <url-pattern>/SearchServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AllMember</display-name>
-    <servlet-name>AllMember</servlet-name>
-    <servlet-class>controller.AllMember</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AllMember</servlet-name>
-    <url-pattern>/AllMember</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>LogoutServlet</display-name>
-    <servlet-name>LogoutServlet</servlet-name>
-    <servlet-class>controller.LogoutServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>LogoutServlet</servlet-name>
-    <url-pattern>/LogoutServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -61,12 +41,12 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>LoginServlet</display-name>
-    <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>controller.LoginServlet</servlet-class>
+    <display-name>LogoutServlet</display-name>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>controller.LogoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>LoginServlet</servlet-name>
-    <url-pattern>/LoginServlet</url-pattern>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet</url-pattern>
   </servlet-mapping>
 </web-app>

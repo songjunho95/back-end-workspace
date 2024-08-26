@@ -5,8 +5,7 @@
 - 웹에서 서버 기능을 수행하는 프로그램으로 HTML 문서나 JPG, PNG 같은 이미지를
   HTTP 프로토콜을 통해 웹 브라우저에 제공하는 서버
 - 서버 내부의 이미 만들어져 있는 정적인 요소들을 화면에 제공하는 역할
-- Apche : Apache Software Foundation에서 만든 웹 서버로 HTTP 통신에 대한 여러
-  라이브러리 제공
+- Apache : Apache Software Foundation에서 만든 웹 서버로 HTTP 통신에 대한 여러 라이브러리 제공
 
 ## 웹 애플리케이션 서버(WAS, Web Application Server)
 
@@ -22,10 +21,10 @@
 ## 동작 구조
 
 1. 클라이언트가 웹 브라우저를 통해 요청을 보낸다.
-2. 해당 요청이 서블릿 대하 요청이면 컨테이너에게 처리를 넘긴다.
-3. 서블릿에서 요청에 대한 실행이 완료된 후에는 컨테이너가 실행 결과를 웹서버에 전달한다.
+2. 해당 요청이 서블릿에 대한 요청이면 컨테이너에게 처리를 넘긴다.
+3. 서블릿에서 요청에 대한 실행이 완료된 후에는 컨테이너가 실행 결과를 웹 서버에 전달한다.
 4. 웹 서버는 서비스를 요청한 클라이언트에 응답한다.
-5. 컨테이너의 서블릿에 대한 설정은 배포 서술자 (web.xml)에 작성한다.
+5. 컨테이너의 서블릿에 대한 설정은 배포 서술자(web.xml)에 작성한다.
 
 ## 배포 서술자(Deployment Descriptor)
 
@@ -37,20 +36,20 @@
 
 - 클라이언트의 요청을 서블릿에게 전달하기 위해서는 서블릿을 등록하고 매핑해야 한다.
 - 서블릿을 등록하고 매핑하는 방법은 web.xml과 @annotation을 이용하는 방법이 있다.
-  '''xml
-  <servlet>
-  <servlet-name>서블릿 이름</servlet-name>
-  <servlet-class>서블릿 클래스</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  <servlet-name>서블릿 이름</servlet-name>
-  <url-pattern>접근 URL 패턴</url-pattern>
-  </servlet-mapping>
-  ''''
+
+```xml
+<servlet>
+    <servlet-name>서블릿 이름</servlet-name>
+    <servlet-class>서블릿 클래스</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>서블릿 이름</servlet-name>
+    <url-pattern>접근 URL 패턴</url-pattern>
+</servlet-mapping>
+```
 
 ```java
 @WebServlet("접근 URL 패턴")
 public class 서블릿이름 extends HttpServlet {
-    
 }
 ```

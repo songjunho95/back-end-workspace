@@ -10,10 +10,6 @@
 	<form action="if4_view.jsp">
 		숫자 : <input type="text" name="number"><br>
 		<input type="submit" value="전송">
-	
 	</form>
-		
-
-
 </body>
 </html>

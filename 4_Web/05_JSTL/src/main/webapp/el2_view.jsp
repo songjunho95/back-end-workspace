@@ -7,30 +7,21 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<h2>1) 기존 방식</h2>
-	<%=request.getParameter("id") %> <br>
+	<%=request.getParameter("id") %><br>
 	<% String[] hobbyList = request.getParameterValues("hobby"); 
 		for(String hobby : hobbyList) {
-			
-	
-	
 	%>
 		- <%=hobby %><br>
 	<% } %>
 	
-	
-	
-	<h2>2) EL 
+	<h2>2) EL </h2>
 	${param.id}<br>
 	- ${paramValues.hobby[0]}<br>
-	- ${paramValues.hobby[1]}<br>
-	
-	</h2>
-	
-	
-	
-	
-
+	- ${paramValues.hobby[1]}
 </body>
 </html>
+
+
+
+
