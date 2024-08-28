@@ -1,4 +1,4 @@
-package com.kh.lamda;
+package com.kh.lambda;
 
 /*
  * 람다식(Lambda Expressions) => 자바스크립트의 화살표 함수!
@@ -56,3 +56,11 @@ public class Application {
 	}
 
 }
+
+
+
+
+
+
+
+
