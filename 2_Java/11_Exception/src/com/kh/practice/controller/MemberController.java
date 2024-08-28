@@ -2,8 +2,8 @@ package com.kh.practice.controller;
 
 import java.util.Arrays;
 
-import com.kh.exception.DuplicateNameException;
-import com.kh.exception.RecordNotFoundException;
+import com.kh.practice.exception.DuplicateNameException;
+import com.kh.practice.exception.RecordNotFoundException;
 import com.kh.practice.model.Member;
 
 public class MemberController {
@@ -17,14 +17,13 @@ public class MemberController {
 		int index = checkId(m.getId());
 		
 		if(index == -1) {
-			
-			
+			mArr[count++] = new Member(m.getId(), m.getName(), m.getPwd(), 
+					m.getEmail(), m.getGender(), m.getAge());
 		} else {
 			// 회원이 기존에 있는 경우
 			throw new DuplicateNameException();
 		}
-		
-	
+
 	}
 	
 	// 멤버 아이디 검색 -> 멤버 index를 아이디로 조회 
@@ -43,20 +42,14 @@ public class MemberController {
 		for(int i = 0; i < mArr.length; i++) {
 			if(mArr[i]!=null && mArr[i].getId().equals(id)) {
 				// 기존 멤버 배열에 아이디가 있는 경우!
-				// return i;
+				return i;
 			} else {
 				throw new RecordNotFoundException();
 			}
 		}
 		// 아이디가 없는 경우
 		return -1;
-	
 	}
-	
-	
-	
-	
-	
 	
 	
 	// 멤버 수정 

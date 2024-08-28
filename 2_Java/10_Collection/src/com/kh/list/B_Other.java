@@ -5,15 +5,12 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
-public class B_Othere {
+public class B_Other {
 	
 	/*
 	 * Vector
 	 * - 동기화된(synchronized) 메서드로 구성 (개념은 스레드에서~)
-	 * 
-	 * 
 	 * */
-	
 	public void method1() {
 		Vector v = new Vector();
 		v.add(0);
@@ -35,7 +32,6 @@ public class B_Othere {
 		
 		System.out.println("size : " + v.size()); // 3
 		System.out.println("capacity : " + v.capacity()); // 10
-		
 	}
 	
 	// 스택(Stack) : 마지막에 저장한 것을 제일 먼저 꺼내는 LIFO(Last In First Out) 구조
@@ -46,18 +42,20 @@ public class B_Othere {
 		s.push(2);
 		s.push(3);
 		s.pop();
+		s.push(4);
+		s.pop();
 		s.push(5);
 		s.push(6);
 		s.push(7);
 		s.pop();
 		System.out.println(s); // 0, 1, 2, 5, 6
+		
 	}
-	
 	
 	// 큐(Queue) : 처음에 저장한 것을 제일 먼저 꺼내는 FIFO(First In First Out) 구조
 	public void method3() {
 		
-		// 큐는 인터페이스
+		// 큐는 인터페이스 
 		Queue q = new LinkedList();
 		
 		q.offer(0);
@@ -72,34 +70,14 @@ public class B_Othere {
 		q.add(7);
 		q.remove();
 		System.out.println(q); // 3, 4, 5, 6, 7
+		
 	}
 	
-	
 	public static void main(String[] args) {
-		B_Othere b = new B_Othere();
-		
+		B_Other b = new B_Other();
 //		b.method1();
 //		b.method2();
 		b.method3();
-
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

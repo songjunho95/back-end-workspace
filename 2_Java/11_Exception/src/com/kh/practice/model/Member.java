@@ -1,8 +1,5 @@
 package com.kh.practice.model;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class Member {
 	
 	private String id;
@@ -76,36 +73,6 @@ public class Member {
 	public String toString() {
 		return "Member [id=" + id + ", name=" + name + ", pwd=" + pwd + ", email=" + email + ", gender=" + gender
 				+ ", age=" + age + "]";
-
-//-------------------------------------------------------	
-
-	
 	}
 		
-	
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

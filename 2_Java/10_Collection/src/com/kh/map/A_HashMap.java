@@ -56,7 +56,7 @@ public class A_HashMap {
 	}
 	
 	public void method2() {
-		Map<String, Snack> map = new HashMap<>();
+		Map<String, Snack<> map = new HashMap<>();
 		
 		map.put("웨하스", new Snack("치즈", 240));
 		map.put("웨하스", new Snack("딸기", 255));
@@ -107,3 +107,4 @@ public class A_HashMap {
 	}
 
 }
+

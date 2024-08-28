@@ -2,23 +2,20 @@ package com.kh.set.model;
 
 import java.util.Objects;
 
-public class Person {
+public class Person implements Comparable<Person>{
 	
 	private String name;
 	private int age;
-	
 	
 	public Person(String name, int age) {
 		this.name = name;
 		this.age = age;
 	}
-
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(age, name);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -33,11 +30,16 @@ public class Person {
 	}
 
 
+
 	@Override
 	public String toString() {
 		return "Person [name=" + name + ", age=" + age + "]";
 	}
-	
-	
-	
+
+	@Override
+	public int compareTo(Person o) {
+		// return this.age - o.age;
+		return (o.age - this.age) * -1;
+	}
+
 }
