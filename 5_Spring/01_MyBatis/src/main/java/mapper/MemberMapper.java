@@ -16,3 +16,6 @@ public interface MemberMapper {
 	List<Member> search(SearchDTO dto);
 	void delete(List<String> idList);
 }
+
+
+
