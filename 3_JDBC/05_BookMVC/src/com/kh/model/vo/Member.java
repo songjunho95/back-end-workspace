@@ -6,12 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@NoArgsConstructor @AllArgsConstructor @Data
 public class Member {
 
-	
-@NoArgsConstructor @AllArgsConstructor  @Data	
-	
-	
 	private int memberNo;
 	private String memberId;
 	private String memberPwd;
