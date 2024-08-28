@@ -6,18 +6,15 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class SendThread extends Thread {
-	
+
 	Socket socket;
 	Scanner sc = new Scanner(System.in);
 	
 	public SendThread(Socket socket) {
 		this.socket = socket;
-		
-		
 	}
 	
 	public void run() {
-		
 		try {
 			PrintStream ps = new PrintStream(socket.getOutputStream());
 			
@@ -25,26 +22,16 @@ public class SendThread extends Thread {
 				ps.println(sc.nextLine());
 				ps.flush();
 			}
-		
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
+
+
+
+
+
+

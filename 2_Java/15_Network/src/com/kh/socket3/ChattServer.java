@@ -6,7 +6,6 @@ import java.net.Socket;
 
 public class ChattServer {
 
-
 	public static void main(String[] args) {
 
 		try {
@@ -19,7 +18,7 @@ public class ChattServer {
 				ClientThread client = new ClientThread(socket);
 				client.start();
 			}
-	
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -27,3 +26,8 @@ public class ChattServer {
 	}
 
 }
+
+
+
+
+
