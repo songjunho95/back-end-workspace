@@ -1,0 +1,21 @@
+package mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data @NoArgsConstructor @AllArgsConstructor @Builder @Mapper
+public interface MovieMapper {
+
+	private int id;
+	private string title;
+	private string genre;
+	private string actor;
+	
+	
+	
+	
+}

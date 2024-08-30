@@ -1,0 +1,17 @@
+package mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.bind.annotation.GetMapping;
+
+
+@Mapper
+public interface MovieMapper {
+
+	String to string = new String
+	
+	private int id;
+	private string title;
+	private string genre;
+	private string actor;
+		
+}

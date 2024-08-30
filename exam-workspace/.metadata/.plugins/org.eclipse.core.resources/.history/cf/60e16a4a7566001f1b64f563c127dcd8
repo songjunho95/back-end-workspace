@@ -1,0 +1,28 @@
+package mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.kh.movie.model.vo.Movie;
+
+
+
+@Mapper
+public interface MovieMapper {
+	
+	void addMoive(Movie vo);
+	List<Movie> movieList();
+	
+	<insert id="addMovie" parameterType="Movie">
+	INSERT INTO movie (title, genre, actor)
+	VALUES(#{title}, #{genre}, #{actor})
+</insert>
+<select id="movieList" resultType="Moive">
+	SELECT * FROM movie
+</select>
+	
+	
+	
+	
+}

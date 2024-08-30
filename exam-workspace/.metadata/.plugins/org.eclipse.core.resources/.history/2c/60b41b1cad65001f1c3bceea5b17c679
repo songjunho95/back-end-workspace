@@ -1,0 +1,32 @@
+package com.kh.movie.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+@Controller
+public class MovieController {
+
+	@GetMapping("/")
+	public String getMethodString1(@RequestParam String param) {
+		return new String();
+	}
+	
+	@GetMapping("/add.jsp")
+	public String getMethodString(@RequestParam String param) {
+		return new String();
+	}
+	
+	@PostMapping("/add")
+	public String postMethodName(@RequestBody String entity) {
+		
+		return entity;
+	}
+	
+	
+	
+	
+}

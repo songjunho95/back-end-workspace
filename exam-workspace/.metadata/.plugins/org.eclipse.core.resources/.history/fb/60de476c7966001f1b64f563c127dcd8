@@ -1,0 +1,6 @@
+package com.kh.movie.model.vo;
+
+public class Movie {
+	private int id;
+	private String title;
+}

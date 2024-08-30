@@ -1,0 +1,13 @@
+package mapper;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data @NoArgsConstructor
+@Builder 
+public interface MovieMapper {
+
+	private int id;
+	
+}

@@ -1,0 +1,20 @@
+package mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
+
+
+@Mapper
+public interface MovieMapper {
+
+	private void int id;
+	
+	
+	
+	private int id;
+	private String string;
+	private String genre;
+	private String actor;
+		
+}
