@@ -1,0 +1,27 @@
+package mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import com.kh.movie.model.vo.Movie;
+
+
+
+@Mapper
+public interface MovieMapper {
+	
+	void addMovie(Movie vo);
+	List<Movie> movieList();
+	
+	
+	void deleteMovie(@Param("id") Movie id);
+
+    Movie findById(@Param("id") Movie id);
+	
+	
+	
+}
+
+

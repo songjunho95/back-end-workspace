@@ -1,0 +1,28 @@
+package com.kh.movie.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.kh.movie.model.vo.Movie;
+import mapper.MovieMapper; // 수정된 import 경로
+
+@Service
+public class MovieService {
+
+    @Autowired
+    private MovieMapper mapper;
+
+    public void addMovie(Movie movie) {
+        mapper.addMovie(movie);
+    }
+
+    public List<Movie> movieList() {
+        return mapper.movieList();
+    }
+
+    public void deleteMovie(Movie id) { // id를 Long으로 수정
+        mapper.deleteMovie(id); // mapper의 메서드 호출
+    }
+}
