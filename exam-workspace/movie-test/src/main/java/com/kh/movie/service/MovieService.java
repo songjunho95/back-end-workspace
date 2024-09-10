@@ -23,6 +23,11 @@ public class MovieService {
 		return mapper.movieList();
 	}
 
+	public void deleteMovie(Movie vo) {
+		mapper.deleteMovie(vo);
+	}
+	
+	
 	
 }
 

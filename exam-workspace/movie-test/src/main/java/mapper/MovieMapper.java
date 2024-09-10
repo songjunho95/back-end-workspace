@@ -12,8 +12,7 @@ public interface MovieMapper {
 	
 	void addMovie(Movie vo);
 	List<Movie> movieList();
-	
-	
+	void deleteMovie (Movie vo);
 	
 }
 

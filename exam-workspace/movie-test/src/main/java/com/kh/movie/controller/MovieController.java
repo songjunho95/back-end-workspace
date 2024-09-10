@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.movie.model.vo.Movie;
 import com.kh.movie.service.MovieService;
@@ -34,5 +35,12 @@ public class MovieController {
 		return "redirect:/";
 	}
 	
-	  
+	
+	@PostMapping("/delete")
+	public String delete(Movie vo) {
+		service.deleteMovie(vo);
+		return "null";
+	}
+	
+
 }

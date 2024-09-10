@@ -36,6 +36,7 @@
 			</div>
 			<button type="submit" class="btn btn-outline-warning">수정</button>
 			<a class="btn btn-outline-danger" href="/delete?no=${board.no}">삭제</a>
+		
 		</form>
 	</div>
 </body>
