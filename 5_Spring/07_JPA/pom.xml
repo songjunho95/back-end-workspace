@@ -47,9 +47,6 @@
 			<scope>test</scope>
 		</dependency>
 		
-		
-		
-		
 		<!-- devtools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
