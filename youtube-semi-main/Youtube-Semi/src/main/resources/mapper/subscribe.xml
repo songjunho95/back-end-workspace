@@ -27,8 +27,3 @@
 		WHERE sub_code = #{code}
 	</delete>
 </mapper>
-
-
-
-
-

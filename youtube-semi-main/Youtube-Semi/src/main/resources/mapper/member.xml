@@ -8,9 +8,3 @@
 		INSERT INTO member VALUES(#{id}, #{password}, #{email}, #{phone})
 	</insert>
 </mapper>
-
-
-
-
-
-

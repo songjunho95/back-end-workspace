@@ -19,6 +19,3 @@ public class Video {
 	//private int channelCode; // channel
 	private Channel channel;
 }
-
-
-

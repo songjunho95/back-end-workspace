@@ -48,7 +48,3 @@
 	<!-- <script src="${pageContext.request.contextPath}/js/signup.js"></script> -->
 </body>
 </html>
-
-
-
-

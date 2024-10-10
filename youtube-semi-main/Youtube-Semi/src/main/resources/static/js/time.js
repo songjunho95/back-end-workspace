@@ -24,15 +24,3 @@ function getTime(date) {
 		return rtf.format(-Math.floor(diff / 86400), 'days');
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-

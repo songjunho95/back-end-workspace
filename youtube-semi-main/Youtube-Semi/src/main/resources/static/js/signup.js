@@ -61,7 +61,3 @@ function validate() {
 	else if(!pwdSubmit) password.focus();
 	return idSubmit && pwdSubmit;
 }
-
-
-
-

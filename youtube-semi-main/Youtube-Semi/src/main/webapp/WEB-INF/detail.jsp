@@ -93,11 +93,3 @@
 	<script src="${pageContext.request.contextPath}/js/time.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
