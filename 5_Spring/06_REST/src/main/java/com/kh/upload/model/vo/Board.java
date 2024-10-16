@@ -23,10 +23,3 @@ public class Board {
 	private String url;
 	private MultipartFile file; // 사실 DTO 따로 만들어서 사용하는 게 원칙!
 }
-
-
-
-
-
-
-

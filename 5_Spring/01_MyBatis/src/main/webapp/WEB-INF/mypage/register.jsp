@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/register" method="post">
+	<form action="/register" method="post" >
 		아이디 : <input type="text" name="id"><br>
 		비밀번호 : <input type="password" name="password"><br>
 		이름 : <input type="text" name="name"><br>

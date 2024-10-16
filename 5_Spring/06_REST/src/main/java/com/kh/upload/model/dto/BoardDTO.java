@@ -15,6 +15,4 @@ public class BoardDTO {
 	private List<Board> list;
 	private Paging paging;
 	
-	
-	
 }

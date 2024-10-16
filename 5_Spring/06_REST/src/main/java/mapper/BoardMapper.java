@@ -17,7 +17,3 @@ public interface BoardMapper {
 	void update(Board vo);
 	void delete(int no);
 }
-
-
-
-

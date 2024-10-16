@@ -51,7 +51,3 @@ public class BoardService {
 		mapper.delete(no);
 	}
 }
-
-
-
-

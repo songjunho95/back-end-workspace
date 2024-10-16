@@ -27,17 +27,15 @@ import com.kh.upload.model.vo.Board;
 import com.kh.upload.model.vo.Paging;
 import com.kh.upload.service.BoardService;
 
-/* REST(Representational State Transfer)
- * 	: API를 설계하는 아키텍처 
- * 	
- * RESTful : REST 원칙을 준수하여 준수하는 방식
+/*
+ * REST(Representational State Transfer)
+ *  : API를 설계하는 아키텍처
+ *  
+ * RESTful : REST 원칙을 준수하는 방식
  * 
- * API(Application Programming Interface) 
- * 	: 서로 다른 애플리케이션들이 서로 데이터를 주고받을 수 있게 하는 도구 
+ * API(Application Programming Interface)
+ *  : 서로 다른 애플리케이션들이 서로 데이터를 주고받을 수 있게 하는 도구
  * */
-
-
-
 
 @RestController
 @RequestMapping("/api/*") // http://localhost:8080/api/
@@ -47,8 +45,6 @@ public class BoardController {
 
 	@Autowired
 	private BoardService service;
-
-
 
 	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException {
 		// 중복 방지를 위한 UUID 적용
@@ -75,8 +71,7 @@ public class BoardController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
-	
-	// Read - Get : 전체 목록 보기 
+	// Read - Get : 전체 목록 보기
 	@GetMapping("/board")
 	public ResponseEntity list(Paging paging) {
 
@@ -92,7 +87,6 @@ public class BoardController {
 	}
 
 	// Read - Get : 1개 가져오기
-
 	@GetMapping("/board/{no}")
 	public ResponseEntity view(@PathVariable int no) {
 		Board board = service.select(no);
@@ -102,8 +96,8 @@ public class BoardController {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
-	//Update - Put 
-	@PutMapping	("/board/{no}")
+	// Update - Put
+	@PutMapping("/board")
 	public ResponseEntity update(Board vo) throws IllegalStateException, IOException {
 
 		if (!vo.getFile().isEmpty()) {
@@ -138,8 +132,3 @@ public class BoardController {
 	}
 
 }
-
-
-
-
-

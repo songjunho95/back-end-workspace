@@ -45,8 +45,3 @@ public class PageController {
 	}
 
 }
-
-
-
-
-

@@ -31,10 +31,3 @@
 		WHERE no = #{no}
 	</delete>
 </mapper>
-
-
-
-
-
-
-

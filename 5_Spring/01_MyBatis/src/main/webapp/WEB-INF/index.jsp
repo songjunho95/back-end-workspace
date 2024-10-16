@@ -62,9 +62,3 @@
 	</c:choose>
 </body>
 </html>
-
-
-
-
-
-
