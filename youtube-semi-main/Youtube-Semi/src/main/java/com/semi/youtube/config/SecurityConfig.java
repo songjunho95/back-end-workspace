@@ -34,7 +34,7 @@ public class SecurityConfig {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 				.authorizeHttpRequests(authorize ->
 					authorize
-						.requestMatchers("/like", "/unlike").authenticated()
+//						.requestMatchers("/like", "/unlike").authenticated()
 						.anyRequest().permitAll()
 				)
 				.build();

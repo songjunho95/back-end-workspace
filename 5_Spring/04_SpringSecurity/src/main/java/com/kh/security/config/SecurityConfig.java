@@ -25,12 +25,21 @@ public class SecurityConfig {
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(authorize ->
 					authorize
-						.requestMatchers("/member").authenticated() // /member 요청이 들어왔을 때 인증된 사람만
-						.requestMatchers("/admin").hasRole("ADMIN") // 권한이 ROLE_ADMIN인 경우만 들어올 수 있음
+//						.requestMatchers("/member").authenticated() // /member 요청이 들어왔을 때 인증된 사람만
+//						.requestMatchers("/admin").hasRole("ADMIN") // 권한이 ROLE_ADMIN인 경우만 들어올 수 있음
 						.anyRequest().permitAll()
 				)
 				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

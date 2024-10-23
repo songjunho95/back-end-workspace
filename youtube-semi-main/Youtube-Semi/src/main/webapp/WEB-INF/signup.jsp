@@ -33,8 +33,8 @@
 				<div id="pwdCheck" class="form-text"></div>
 			</div>
 			<div class="mb-3">
-				<label for="email" class="form-label">이메일</label> 
-				<input type="text" class="form-control" id="email" name="email">
+				<label for="email" class="form-label">이름</label> 
+				<input type="text" class="form-control" id="name" name="name">
 				<div id="emailCheck" class="form-text"></div>
 			</div>
 			<div class="mb-3">

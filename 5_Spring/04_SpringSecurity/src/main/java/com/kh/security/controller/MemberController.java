@@ -36,7 +36,7 @@ public class MemberController {
 			String token = tokenProvider.create(member);
 			return token;
 		}
-		return null;
+		return "/mypage/";
 	}
 
 }
