@@ -69,11 +69,11 @@ public class BoardController {
 
 		List<Board> list = service.selectAll(paging);
 
-		for (Board b : list) {
-			LocalDateTime date = b.getDate();
-			Date formatDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
-			b.setFormatDate(formatDate);
-		}
+			for (Board b : list) {
+				LocalDateTime date = b.getDate();
+				Date formatDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+				b.setFormatDate(formatDate);
+			}
 
 		model.addAttribute("list", list);
 		model.addAttribute("paging", new Paging(paging.getPage(), service.total()));
@@ -112,6 +112,7 @@ public class BoardController {
 		System.out.println(vo.getFile().isEmpty());
 		
 		if (!vo.getFile().isEmpty()) {
+			
 			// 파일이 비어있지 않다면 기존 이미지 삭제(delete)
 			if(vo.getUrl()!=null) { // 기존 이미지가 null이 아닌 경우
 				File file = new File(path + vo.getUrl());

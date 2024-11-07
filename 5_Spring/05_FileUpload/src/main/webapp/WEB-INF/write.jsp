@@ -21,7 +21,7 @@
 			</div>
 			<div class="form-group">
 				<label>Content</label>
-				<textarea class="form-control" name="content" rows="10"></textarea>
+				<t class="form-control" name="content" rows="10">
 			</div>
 			<div class="form-group">
 				<label>Add File</label>
@@ -32,12 +32,3 @@
 	</div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-

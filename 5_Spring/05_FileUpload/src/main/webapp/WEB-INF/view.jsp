@@ -29,7 +29,7 @@
 				수정시 file이 있다면 기존 파일은 삭제 하고 새로 추가된 파일로 업로드하고 DB 수정
 				삭제시 업로드한 파일도 삭제 (파일 삭제 : File 객체의 delete() 메서드 사용 )
 			-->
-			<img src="http://192.168.10.51:8082/${board.url}" width="200"/>
+			<img src="http://192.168.10.51:8082/${board.url}" width="200" height="200"/>
 			<div class="form-group">
 				<label>Add File</label> <input class="form-control" name="file"
 					type="file" accept="image/*">
